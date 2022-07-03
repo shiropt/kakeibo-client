@@ -1,22 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { getPage, initTestHelpers } from "next-page-tester";
-
+import { Layout } from "./Layout";
 initTestHelpers();
 
-describe("TestLayoutのテスト", () => {
-  it("Header nav クリックで該当のページへ遷移すること", async () => {
+describe("Layoutのテスト", () => {
+  it("初期表示でliteテーマアイコンであること", async () => {
+    render(<Layout>main</Layout>);
+    expect(screen.getByTestId("moon")).toBeInTheDocument();
+  });
+  it("アイコンクリックでテーマが切り替わること", async () => {
     const { page } = await getPage({ route: "/" });
     render(page);
-    // userEvent.click(screen.getByTestId("home-nav"));
-    // expect(await screen.findByText("Home")).toBeInTheDocument();
-    // userEvent.click(screen.getByTestId("blog-nav"));
-    // expect(await screen.findByText("Blog")).toBeInTheDocument();
-    // userEvent.click(screen.getByTestId("comment-nav"));
-    // expect(await screen.findByText("Comment")).toBeInTheDocument();
-    // userEvent.click(screen.getByTestId("context-nav"));
-    // expect(await screen.findByText("Context")).toBeInTheDocument();
-    // userEvent.click(screen.getByTestId("task-nav"));
-    // expect(await screen.findByText("Todo")).toBeInTheDocument();
+    const icon = screen.getByTestId("icon");
+    userEvent.click(icon);
+    expect(await screen.findByTestId("moon-off")).toBeInTheDocument();
+    userEvent.click(icon);
+    expect(await screen.findByTestId("moon")).toBeInTheDocument();
   });
 });
