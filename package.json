@@ -9,10 +9,16 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
-    "next": "latest",
+    "@mantine/core": "^4.2.11",
+    "@mantine/form": "^4.2.11",
+    "@mantine/hooks": "^4.2.11",
+    "@mantine/next": "^4.2.11",
+    "next": "12.1.7-canary.33",
     "next-page-tester": "^0.32.0",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "stylis-plugin-rtl": "^2.1.1",
+    "tabler-icons-react": "^1.52.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.4",
