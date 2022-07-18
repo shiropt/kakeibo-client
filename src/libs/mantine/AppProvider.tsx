@@ -14,12 +14,7 @@ export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <ThemeContext.Provider value={{ colorScheme, toggleTheme }}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{ dir: "rtl", colorScheme }}
-        emotionOptions={{ key: "rtl", prepend: false, stylisPlugins: [rtlPlugin] }}
-      >
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ dir: "rtl", colorScheme }}>
         {children}
       </MantineProvider>
     </ThemeContext.Provider>
