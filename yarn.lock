@@ -1649,10 +1649,10 @@
     react-popper "^2.2.5"
     react-textarea-autosize "^8.3.2"
 
-"@mantine/form@^4.2.11":
-  version "4.2.11"
-  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-4.2.11.tgz#4227419667da816a66ca93a308bc8e2d12360eeb"
-  integrity sha512-9qlxtHIXPhTC7HtjBCDWVxjKaUYRy01HY9h9GIdMtA1++bTtu94NU2/7m0Tjjewl5R0MpLxVAim18WKQxTJ3dw==
+"@mantine/form@^4.2.12":
+  version "4.2.12"
+  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-4.2.12.tgz#c204fa17b0232027d9fb0eeb2a6b214708d9e014"
+  integrity sha512-CnpkzZr7VVekN3gg/4fMG9DYEqDsOg1jJGGxFKZ7GjR4liwEOsL3FvC+Szi3OlI0ytfLFOg8zU8RCoEO758sQA==
 
 "@mantine/hooks@^4.2.11":
   version "4.2.11"
@@ -9581,6 +9581,14 @@ node-releases@^2.0.5:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
   integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
 
+nookies@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.5.2.tgz#cc55547efa982d013a21475bd0db0c02c1b35b27"
+  integrity sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA==
+  dependencies:
+    cookie "^0.4.1"
+    set-cookie-parser "^2.4.6"
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
@@ -11499,6 +11507,11 @@ set-blocking@^2.0.0:
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==
 
+set-cookie-parser@^2.4.6:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/set-cookie-parser/-/set-cookie-parser-2.5.1.tgz#ddd3e9a566b0e8e0862aca974a6ac0e01349430b"
+  integrity sha512-1jeBGaKNGdEq4FgIrORu/N570dwoPYio8lSoYLWmX7sQ//0JY08Xh9o5pBcgmHQ/MbsYp/aZnOe1s1lIsbLprQ==
+
 set-value@^2.0.0, set-value@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/set-value/-/set-value-2.0.1.tgz#a18d40530e6f07de4228c7defe4227af8cad005b"
@@ -13289,6 +13302,11 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.17.9:
+  version "3.17.9"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.17.9.tgz#6ce737474e51677e7166602ed58f6f8ba8d89c86"
+  integrity sha512-QF1843pYoRk1jFP+/UiEySXaTSiIyFod3KyDzoO3qHKGZdX7z7RNXI4lEsiibvpnIZQwcDVU58ZrxP4pQ7BmTQ==
 
 zwitch@^1.0.0:
   version "1.0.5"

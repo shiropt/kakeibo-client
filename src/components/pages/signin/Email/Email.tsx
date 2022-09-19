@@ -6,7 +6,9 @@ import { AuthForm } from "../../../ui/form";
 export const EmailSignin: FC = () => {
   const router = useRouter();
 
-  const signin = useCallback(() => {
+  const signin = useCallback((values = {}) => {
+    console.log(values);
+
     router.push("/");
   }, []);
 

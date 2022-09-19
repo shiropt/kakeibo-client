@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@mantine/core": "^4.2.11",
-    "@mantine/form": "^4.2.11",
+    "@mantine/form": "^4.2.12",
     "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^4.2.11",
     "@storybook/addon-postcss": "^2.0.0",
@@ -21,12 +21,14 @@
     "history": "^5.3.0",
     "next": "12.1.7-canary.33",
     "next-page-tester": "^0.33.0",
+    "nookies": "^2.5.2",
     "postcss": "^7",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "stylis-plugin-rtl": "^2.1.1",
     "tabler-icons-react": "^1.52.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "zod": "^3.17.9"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
