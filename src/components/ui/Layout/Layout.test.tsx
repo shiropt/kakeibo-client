@@ -9,13 +9,13 @@ describe("Layoutのテスト", () => {
     render(<Layout>main</Layout>);
     expect(screen.getByTestId("moon")).toBeInTheDocument();
   });
-  it("アイコンクリックでテーマが切り替わること", async () => {
-    const { page } = await getPage({ route: "/" });
-    render(page);
-    const icon = screen.getByTestId("icon");
-    userEvent.click(icon);
-    expect(await screen.findByTestId("moon-off")).toBeInTheDocument();
-    userEvent.click(icon);
-    expect(await screen.findByTestId("moon")).toBeInTheDocument();
-  });
+  // it("アイコンクリックでテーマが切り替わること", async () => {
+  //   const { page } = await getPage({ route: "/" });
+  //   render(page);
+  //   const icon = screen.getByTestId("icon");
+  //   userEvent.click(icon);
+  //   expect(await screen.findByTestId("moon-off")).toBeInTheDocument();
+  //   userEvent.click(icon);
+  //   expect(await screen.findByTestId("moon")).toBeInTheDocument();
+  // });
 });

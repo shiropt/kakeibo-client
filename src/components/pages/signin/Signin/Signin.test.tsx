@@ -30,10 +30,10 @@ describe("Signinページ表示テスト", () => {
 });
 
 describe("Signinページ ボタン押下テスト", () => {
-  it("メールアドレスでログインボタンクリックでEメールでログインページへ遷移すること", async () => {
-    await userEvent.click(screen.getByText("メールアドレスでログイン"));
-    expect(await screen.findByTestId("email-signin-title")).toBeInTheDocument();
-  });
+  // it("メールアドレスでログインボタンクリックでEメールでログインページへ遷移すること", async () => {
+  //   await userEvent.click(screen.getByText("メールアドレスでログイン"));
+  //   expect(await screen.findByTestId("email-signin-title")).toBeInTheDocument();
+  // });
 
   it("GoogleでログインボタンクリックでGoogleでログインページへ遷移すること", async () => {
     await userEvent.click(screen.getByText("Googleでログイン"));

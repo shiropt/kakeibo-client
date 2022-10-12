@@ -1,0 +1,187 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  /api/v1/user/{id}:
+    get:
+      operationId: UserController_getUser
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /api/v1/user:
+    post:
+      operationId: UserController_createUser
+      parameters: []
+      responses:
+        "201":
+          description: ""
+  /api/v1/money-diary:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiary
+      parameters:
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryDto"
+    post:
+      operationId: MoneyDiaryController_createMoneyDiary
+      parameters:
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoneyDiaryDto"
+      responses:
+        "201":
+          description: ""
+    put:
+      operationId: MoneyDiaryController_updateMoneyDiary
+      parameters:
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoneyDiaryDto"
+      responses:
+        "200":
+          description: ""
+  /api/v1/money-diary/search:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiaryByYear
+      parameters:
+        - name: year
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: month
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryDto"
+  /api/v1/money-diary/month:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiaryByMonth
+      parameters:
+        - name: month
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /api/v1/money-diary/{id}:
+    delete:
+      operationId: MoneyDiaryController_deleteMoneyDiary
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+info:
+  title: kakeibo-api
+  description: ""
+  version: "1.0"
+  contact: {}
+tags:
+  - name: kakeibo-api
+    description: ""
+servers: []
+components:
+  schemas:
+    MoneyDiaryDto:
+      type: object
+      properties:
+        id:
+          type: number
+        memo:
+          type: string
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        date:
+          format: date-time
+          type: string
+        period:
+          type: number
+        expenseItemName:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - memo
+        - withdrawal
+        - payment
+        - date
+        - period
+        - expenseItemName
+        - categories
+        - createdAt
+        - updatedAt

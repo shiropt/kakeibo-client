@@ -14,14 +14,14 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
   const { colorScheme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className=" flex justify-center items-center flex-col min-h-screen font-mono">
+    <div>
       <Head>
         <title>{title}</title>
       </Head>
-      <Header className=" w-screen" height={80} p="xs">
+      <Header className=" w-screen" height={60} p="xs">
         <ThemeIcon
           data-testid="icon"
-          className="cursor-pointer float-right mt-2 mr-2"
+          className="cursor-pointer float-right mr-2"
           variant="outline"
           size="xl"
           color="gray"
@@ -30,7 +30,7 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
           {colorScheme === "dark" ? <Moon data-testid="moon" /> : <MoonOff data-testid="moon-off" />}
         </ThemeIcon>
       </Header>
-      <main className="flex justify-center items-center flex-col min-h-screen font-mono">{children}</main>
+      <main className="min-h-screen">{children}</main>
     </div>
   );
 };

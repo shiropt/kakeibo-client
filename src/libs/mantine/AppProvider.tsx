@@ -10,7 +10,7 @@ type ContextType = {
 
 export const ThemeContext = createContext<ContextType>({ colorScheme: "dark", toggleTheme: () => {} });
 export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [colorScheme, toggleTheme] = useToggle<"dark" | "light">("light", ["light", "dark"]);
+  const [colorScheme, toggleTheme] = useToggle<"dark" | "light">(["light", "dark"]);
 
   return (
     <ThemeContext.Provider value={{ colorScheme, toggleTheme }}>
