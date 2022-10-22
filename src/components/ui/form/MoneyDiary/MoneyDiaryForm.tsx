@@ -36,8 +36,6 @@ export const MoneyDiaryForm: FC = () => {
     },
   });
   const submit = async (data: MoneyDiaryDto) => {
-    console.log(data);
-
     await apiClient.money_diary.post({
       body: {
         ...data,
@@ -52,7 +50,6 @@ export const MoneyDiaryForm: FC = () => {
     showNotification({
       title: `${data.date.getFullYear()}年${data.date.getMonth() + 1}月`,
       message: `${data.expenseItemName}を追加しました`,
-      style: { width: 240 },
     });
   };
 

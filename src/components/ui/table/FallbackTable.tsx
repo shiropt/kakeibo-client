@@ -16,17 +16,13 @@ export const FallbackTable: FC<Props> = ({ isLoading }) => {
       </thead>
       <tbody>
         <tr className="bg-gray-100">
-          <td className="flex">
-            日付 <IconArrowsSort strokeWidth={1} size={20} />
+          <td className=" w-24">日付</td>
+          <td className="">費目名</td>
+          <td>収支</td>
+          <td className="">メモ</td>
+          <td className="w-11" colSpan={2}>
+            カテゴリー
           </td>
-          <td>費目名</td>
-          <td className="flex">
-            収支
-            <IconArrowsSort strokeWidth={1} size={20} />
-          </td>
-          <td>メモ</td>
-          <td>カテゴリー</td>
-          <td></td>
         </tr>
         {isLoading ? (
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => {
@@ -40,7 +36,7 @@ export const FallbackTable: FC<Props> = ({ isLoading }) => {
           })
         ) : (
           <tr>
-            <td>データがありません</td>
+            <td colSpan={6}>データがありません</td>
           </tr>
         )}
       </tbody>

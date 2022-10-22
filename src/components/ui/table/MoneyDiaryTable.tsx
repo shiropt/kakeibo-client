@@ -7,10 +7,10 @@ import { apiClient } from "../../../hooks/useFetcher";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 
 export const MoneyDiaryTable: FC = () => {
-  const { data, error } = useMoneyDiary();
   const minusColor = (num: number) => {
     return num < 0 ? "text-red-500" : "";
   };
+  const { data, error } = useMoneyDiary();
 
   const sortDate = useCallback(() => {}, [data]);
   if (!data) return <FallbackTable isLoading={true} />;
@@ -28,7 +28,7 @@ export const MoneyDiaryTable: FC = () => {
     }, 0);
 
   return (
-    <Table className=" border-gray-100">
+    <Table className="border-gray-100">
       <thead className="bg-gray-800 h-14">
         <tr>
           <th className=" text-white" colSpan={1}>

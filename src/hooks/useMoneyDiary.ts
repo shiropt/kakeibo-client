@@ -1,13 +1,14 @@
 import useAspidaSWR from "@aspida/swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiClient } from "../hooks/useFetcher";
+import { useDateStore } from "../libs/store/date";
 
 export const useMoneyDiary = () => {
-  const [year, setYear] = useState<string | null>(new Date().getFullYear().toString());
-  const [month, setMonth] = useState<string | null>((new Date().getMonth() + 1).toString());
+  const { month, year, setMonth, setYear } = useDateStore();
   const { data, error, mutate } = useAspidaSWR(apiClient.money_diary.search, {
     headers: { userId: "1" },
-    query: { year: year || "", month: month || "" },
+    query: { year, month },
   });
-  return { year, month, setYear, setMonth, data, error, mutate };
+
+  return { data, error, month, year, setMonth, setYear, mutate };
 };
