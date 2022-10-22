@@ -1,13 +1,9 @@
 import { Select } from "@mantine/core";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
+import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 
-type Props = {
-  year: string | null;
-  month: string | null;
-  setYear: Dispatch<SetStateAction<string | null>>;
-  setMonth: Dispatch<SetStateAction<string | null>>;
-};
-export const SelectYearAndMonth: FC<Props> = ({ year, month, setYear, setMonth }) => {
+export const SelectYearAndMonth: FC = () => {
+  const { year, month, setMonth, setYear } = useMoneyDiary();
   return (
     <div className=" flex">
       <Select

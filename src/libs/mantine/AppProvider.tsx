@@ -1,7 +1,7 @@
-import rtlPlugin from "stylis-plugin-rtl";
 import { MantineProvider } from "@mantine/core";
 import { createContext, FC, ReactNode, useState } from "react";
 import { useToggle } from "@mantine/hooks";
+import { NotificationsProvider } from "@mantine/notifications";
 
 type ContextType = {
   colorScheme: "light" | "dark";
@@ -15,7 +15,7 @@ export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) =>
   return (
     <ThemeContext.Provider value={{ colorScheme, toggleTheme }}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ dir: "rtl", colorScheme }}>
-        {children}
+        <NotificationsProvider>{children}</NotificationsProvider>
       </MantineProvider>
     </ThemeContext.Provider>
   );

@@ -43,7 +43,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/MoneyDiaryDto"
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
     post:
       operationId: MoneyDiaryController_createMoneyDiary
       parameters:
@@ -67,6 +67,11 @@ paths:
         - name: userId
           required: true
           in: header
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
           schema:
             type: string
       requestBody:
@@ -105,7 +110,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/MoneyDiaryDto"
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
   /api/v1/money-diary/month:
     get:
       operationId: MoneyDiaryController_getMoneyDiaryByMonth
@@ -123,6 +128,12 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
   /api/v1/money-diary/{id}:
     delete:
       operationId: MoneyDiaryController_deleteMoneyDiary
@@ -146,7 +157,7 @@ tags:
 servers: []
 components:
   schemas:
-    MoneyDiaryDto:
+    MoneyDiaryGetResponse:
       type: object
       properties:
         id:
@@ -185,3 +196,31 @@ components:
         - categories
         - createdAt
         - updatedAt
+    MoneyDiaryDto:
+      type: object
+      properties:
+        memo:
+          type: string
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        date:
+          format: date-time
+          type: string
+        period:
+          type: number
+        expenseItemName:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+      required:
+        - memo
+        - withdrawal
+        - payment
+        - date
+        - period
+        - expenseItemName
+        - categories

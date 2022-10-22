@@ -13,6 +13,6 @@ export type Methods = {
     }
 
     status: 200
-    resBody: Types.MoneyDiaryDto[]
+    resBody: Types.MoneyDiaryGetResponse[]
   }
 }

@@ -8,7 +8,7 @@ export type Methods = {
     } | undefined
 
     status: 200
-    resBody: Types.MoneyDiaryDto[]
+    resBody: Types.MoneyDiaryGetResponse[]
   }
 
   post: {

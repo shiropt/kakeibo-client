@@ -1,47 +1,116 @@
-import { Box, TextInput, NumberInput, Textarea, MultiSelect, Button, Radio } from "@mantine/core";
-import { FC, useState } from "react";
-import { SquareMinus, SquarePlus } from "tabler-icons-react";
+import { TextInput, NumberInput, Textarea, MultiSelect, Button } from "@mantine/core";
+import { FC } from "react";
 import { DatePicker } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
+import { MoneyDiaryDto } from "../../../../../api/@types";
+import { apiClient } from "../../../../hooks/useFetcher";
+import { z } from "zod";
+import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
+import { showNotification } from "@mantine/notifications";
 
 export const MoneyDiaryForm: FC = () => {
-  const form = useForm<{ name: string }>({ initialValues: { name: "" } });
-  const [selectAmount, setSelectAmount] = useState("出金");
+  const { mutate } = useMoneyDiary();
+
+  const schema = z.object({
+    memo: z.string().max(255),
+    withdrawal: z.number().nullable(),
+    payment: z.number().nullable(),
+    date: z.date(),
+    period: z.number(),
+    expenseItemName: z
+      .string()
+      .min(1, { message: "費目名は必須です" })
+      .max(255, { message: "費目名の最大入力文字数は255文字です" }),
+    categories: z.array(z.string()),
+  });
+  const form = useForm<MoneyDiaryDto>({
+    schema: zodResolver(schema),
+    initialValues: {
+      memo: "",
+      withdrawal: 0,
+      payment: 0,
+      date: new Date(),
+      period: 0,
+      expenseItemName: "",
+      categories: [],
+    },
+  });
+  const submit = async (data: MoneyDiaryDto) => {
+    console.log(data);
+
+    await apiClient.money_diary.post({
+      body: {
+        ...data,
+        categories: data.categories.map(Number),
+        withdrawal: data.withdrawal || 0,
+        payment: data.payment || 0,
+      },
+      headers: { userId: "1" },
+    });
+    form.reset();
+    mutate();
+    showNotification({
+      title: `${data.date.getFullYear()}年${data.date.getMonth() + 1}月`,
+      message: `${data.expenseItemName}を追加しました`,
+      style: { width: 240 },
+    });
+  };
+
   return (
-    <form className=" border-2 mt-4 mr-2 border-gray-100 p-4">
+    <form onSubmit={form.onSubmit(submit)} className=" border-2 mt-4 mr-2 border-gray-100 p-4">
       <div className="flex">
         <p className=" mt-1 mr-2 w-20">費目名</p>
-        <TextInput className=" mb-4 w-80" placeholder="費目名を入力" />
+        <TextInput {...form.getInputProps("expenseItemName")} className=" mb-4 w-80" placeholder="費目名を入力" />
       </div>
-      <div className=" flex">
-        <p className=" mt-1 mr-2 w-20">金額</p>
-        <Radio.Group size="sm" spacing="xs" onChange={setSelectAmount} value={selectAmount}>
-          <Radio value="出金" label="出金" className=" w-16" />
-          <Radio value="入金" label="入金" />
-        </Radio.Group>
-        <NumberInput hideControls className=" ml-2 mb-4  w-44" placeholder={`${selectAmount}額を入力`} />
+      <div className="flex">
+        <p className=" mt-1 mr-2 w-20">出金額</p>
+        <NumberInput
+          {...form.getInputProps("payment")}
+          hideControls
+          className="mr-2 mb-4  w-80"
+          placeholder={`出金額を入力`}
+          maxLength={9}
+        />
+      </div>
+      <div className="flex">
+        <p className=" mt-1 mr-2 w-20">入金額</p>
+        <NumberInput
+          {...form.getInputProps("withdrawal")}
+          hideControls
+          className="mr-2 mb-4  w-80"
+          placeholder={`入金額を入力`}
+          maxLength={9}
+        />
       </div>
 
       <div className=" flex">
         <p className=" mt-1 mr-2 w-20">日付</p>
-        <DatePicker className=" mb-4  w-80" placeholder="日付を選択" />
+        <DatePicker {...form.getInputProps("date")} className=" mb-4  w-80" placeholder="日付を選択" />
       </div>
       <div className=" flex">
         <p className=" mt-1 mr-2 w-20">カテゴリ</p>
         <MultiSelect
-          data={["食費", "給与", "家賃", "貯金", "臨時収入", "交際費"]}
+          data={[
+            { value: "1", label: "食費" },
+            { value: "2", label: "給与" },
+            { value: "3", label: "家賃" },
+            { value: "4", label: "貯金" },
+            { value: "5", label: "臨時収入" },
+            { value: "6", label: "交際費" },
+          ]}
           className=" mb-4  w-80"
           placeholder="カテゴリを入力"
           searchable
           nothingFound="Nothing found"
+          {...form.getInputProps("categories")}
         />
       </div>
       <div className=" flex">
         <p className=" mt-1 mr-2 w-20">メモ</p>
-        <Textarea placeholder="メモを入力" className=" mb-4  w-80" />
+        <Textarea {...form.getInputProps("memo")} placeholder="メモを入力" className=" mb-4  w-80" />
       </div>
       <div>
-        <Button type="submit" fullWidth size="md" color="red" className="">
+        <Button type="submit" fullWidth size="md" color="red">
           登録
         </Button>
       </div>

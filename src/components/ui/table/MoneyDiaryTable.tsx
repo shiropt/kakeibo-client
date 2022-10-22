@@ -1,38 +1,16 @@
-import { FC, useCallback, useState } from "react";
-import { Table, Badge, Menu, Button, Text, Select, Skeleton } from "@mantine/core";
-import { API } from "../../../utils/path";
-import { useFetchers } from "../../../hooks/useFetcher";
+import { FC, useCallback } from "react";
+import { Table, Badge, Menu } from "@mantine/core";
 import { IconCopy, IconTrash, IconEdit, IconDots, IconArrowsSort } from "@tabler/icons";
 import { FallbackTable } from "./FallbackTable";
 import useAspidaSWR from "@aspida/swr";
-import { apiClient } from "../../../../api";
+import { apiClient } from "../../../hooks/useFetcher";
+import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 
-type MoneyDiary = {
-  id: number;
-  memo: string;
-  withdrawal: number;
-  payment: number;
-  date: Date;
-  period: number;
-  expenseItemName: string;
-  categories: { id: number; name: string }[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-type Props = {
-  year: string | null;
-  month: string | null;
-};
-
-export const MoneyDiaryTable: FC<Props> = ({ year, month }) => {
+export const MoneyDiaryTable: FC = () => {
+  const { data, error } = useMoneyDiary();
   const minusColor = (num: number) => {
     return num < 0 ? "text-red-500" : "";
   };
-  const { data, error } = useAspidaSWR(apiClient.money_diary.search, {
-    headers: { userId: "1" },
-    query: { year: year || "", month: month || "" },
-  });
 
   const sortDate = useCallback(() => {}, [data]);
   if (!data) return <FallbackTable isLoading={true} />;
@@ -41,16 +19,16 @@ export const MoneyDiaryTable: FC<Props> = ({ year, month }) => {
   const sumWithdrawal = data
     .map((moneyDiary) => moneyDiary.withdrawal)
     .reduce((prev, current) => {
-      return prev + current;
+      return prev || 0 + (current || 0);
     }, 0);
   const sumPayment = data
     .map((moneyDiary) => moneyDiary.payment)
     .reduce((prev, current) => {
-      return prev + current;
+      return prev || 0 + (current || 0);
     }, 0);
 
   return (
-    <Table>
+    <Table className=" border-gray-100">
       <thead className="bg-gray-800 h-14">
         <tr>
           <th className=" text-white" colSpan={1}>
@@ -59,12 +37,12 @@ export const MoneyDiaryTable: FC<Props> = ({ year, month }) => {
           <th colSpan={1}></th>
           <th colSpan={4} className="text-right text-white">
             <p className="flex float-right">
-              <span className="px-2">収入 {sumWithdrawal.toLocaleString()}(円)</span>
-              <span className="px-2">支出 {sumPayment.toLocaleString()}(円)</span>
+              <span className="px-2">収入 {(sumWithdrawal || 0).toLocaleString()}(円)</span>
+              <span className="px-2">支出 {(sumPayment || 0).toLocaleString()}(円)</span>
               <span className="px-2">
                 収支
-                <span className={minusColor(sumWithdrawal - sumPayment)}>
-                  {(sumWithdrawal - sumPayment).toLocaleString()}
+                <span className={minusColor(sumWithdrawal || 0 - (sumPayment || 0))}>
+                  {(sumWithdrawal || 0 - (sumPayment || 0)).toLocaleString()}
                 </span>
                 (円)
               </span>
@@ -73,7 +51,7 @@ export const MoneyDiaryTable: FC<Props> = ({ year, month }) => {
         </tr>
       </thead>
       <tbody>
-        <tr className="bg-gray-100">
+        <tr className=" border-b">
           <td className="flex" onClick={sortDate}>
             日付 <IconArrowsSort strokeWidth={1} size={20} />
           </td>
@@ -94,8 +72,8 @@ export const MoneyDiaryTable: FC<Props> = ({ year, month }) => {
               <td className="w-20">{new Date(moneyDiary.date).getDate() + "日"}</td>
               <td className="w-80">{moneyDiary.expenseItemName}</td>
               <td className="w-40">
-                <span className={minusColor(moneyDiary.withdrawal - moneyDiary.payment)}>
-                  {(moneyDiary.withdrawal - moneyDiary.payment).toLocaleString()}
+                <span className={minusColor(moneyDiary.withdrawal || 0 - (moneyDiary.payment || 0))}>
+                  {(moneyDiary.withdrawal || 0 - (moneyDiary.payment || 0)).toLocaleString()}
                 </span>
               </td>
               <td className="w-96">{moneyDiary.memo}</td>

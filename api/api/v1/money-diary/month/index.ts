@@ -1,4 +1,6 @@
 /* eslint-disable */
+import type * as Types from '../../../../@types'
+
 export type Methods = {
   get: {
     reqHeaders?: {
@@ -10,5 +12,6 @@ export type Methods = {
     }
 
     status: 200
+    resBody: Types.MoneyDiaryGetResponse[]
   }
 }
