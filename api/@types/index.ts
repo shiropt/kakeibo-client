@@ -2,8 +2,8 @@
 export type MoneyDiaryGetResponse = {
   id: number;
   memo: string;
-  withdrawal: number | null;
-  payment: number | null;
+  withdrawal: number;
+  payment: number;
   date: Date;
   period: number;
   expenseItemName: string;
@@ -14,10 +14,10 @@ export type MoneyDiaryGetResponse = {
 
 export type MoneyDiaryDto = {
   memo: string;
-  withdrawal: number | null;
-  payment: number | null;
+  withdrawal: number;
+  payment: number;
   date: Date;
   period: number;
   expenseItemName: string;
-  categories: number[];
+  categories: (string | number)[];
 };

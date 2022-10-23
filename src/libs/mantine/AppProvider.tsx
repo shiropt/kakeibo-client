@@ -2,6 +2,7 @@ import { MantineProvider } from "@mantine/core";
 import { createContext, FC, ReactNode, useState } from "react";
 import { useToggle } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
 type ContextType = {
   colorScheme: "light" | "dark";
@@ -15,7 +16,9 @@ export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) =>
   return (
     <ThemeContext.Provider value={{ colorScheme, toggleTheme }}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ dir: "rtl", colorScheme }}>
-        <NotificationsProvider>{children}</NotificationsProvider>
+        <ModalsProvider labels={{ confirm: "OK", cancel: "キャンセル" }}>
+          <NotificationsProvider>{children}</NotificationsProvider>
+        </ModalsProvider>
       </MantineProvider>
     </ThemeContext.Provider>
   );

@@ -19,13 +19,4 @@ export type Methods = {
     status: 201
     reqBody: Types.MoneyDiaryDto
   }
-
-  put: {
-    reqHeaders?: {
-      userId: string
-    } | undefined
-
-    status: 200
-    reqBody: Types.MoneyDiaryDto
-  }
 }

@@ -61,28 +61,6 @@ paths:
       responses:
         "201":
           description: ""
-    put:
-      operationId: MoneyDiaryController_updateMoneyDiary
-      parameters:
-        - name: userId
-          required: true
-          in: header
-          schema:
-            type: string
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MoneyDiaryDto"
-      responses:
-        "200":
-          description: ""
   /api/v1/money-diary/search:
     get:
       operationId: MoneyDiaryController_getMoneyDiaryByYear
@@ -135,6 +113,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/MoneyDiaryGetResponse"
   /api/v1/money-diary/{id}:
+    put:
+      operationId: MoneyDiaryController_updateMoneyDiary
+      parameters:
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoneyDiaryDto"
+      responses:
+        "200":
+          description: ""
     delete:
       operationId: MoneyDiaryController_deleteMoneyDiary
       parameters:

@@ -27,6 +27,10 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             const prefix3 = `${PATH0}/${val3}`
 
             return {
+              put: (option: { body: Methods2['put']['reqBody'], headers?: Methods2['put']['reqHeaders'] | undefined, config?: T | undefined }) =>
+                fetch<void, BasicHeaders, Methods2['put']['status']>(prefix, prefix3, PUT, option).send(),
+              $put: (option: { body: Methods2['put']['reqBody'], headers?: Methods2['put']['reqHeaders'] | undefined, config?: T | undefined }) =>
+                fetch<void, BasicHeaders, Methods2['put']['status']>(prefix, prefix3, PUT, option).send().then(r => r.body),
               delete: (option?: { config?: T | undefined } | undefined) =>
                 fetch<void, BasicHeaders, Methods2['delete']['status']>(prefix, prefix3, DELETE, option).send(),
               $delete: (option?: { config?: T | undefined } | undefined) =>
@@ -58,10 +62,6 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
             fetch<void, BasicHeaders, Methods1['post']['status']>(prefix, PATH0, POST, option).send(),
           $post: (option: { body: Methods1['post']['reqBody'], headers?: Methods1['post']['reqHeaders'] | undefined, config?: T | undefined }) =>
             fetch<void, BasicHeaders, Methods1['post']['status']>(prefix, PATH0, POST, option).send().then(r => r.body),
-          put: (option: { body: Methods1['put']['reqBody'], headers?: Methods1['put']['reqHeaders'] | undefined, config?: T | undefined }) =>
-            fetch<void, BasicHeaders, Methods1['put']['status']>(prefix, PATH0, PUT, option).send(),
-          $put: (option: { body: Methods1['put']['reqBody'], headers?: Methods1['put']['reqHeaders'] | undefined, config?: T | undefined }) =>
-            fetch<void, BasicHeaders, Methods1['put']['status']>(prefix, PATH0, PUT, option).send().then(r => r.body),
           $path: () => `${prefix}${PATH0}`
         },
         user: {

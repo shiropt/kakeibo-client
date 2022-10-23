@@ -1,7 +1,6 @@
 import axios from "axios";
 import useSWR from "swr";
 import axiosClient from "@aspida/axios";
-// import api from "../../api/$api";
 import api from "../../api/api/$api";
 export const { v1: apiClient } = api(axiosClient(axios, { baseURL: "http://localhost:3000" }));
 
