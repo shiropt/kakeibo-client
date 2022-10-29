@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { MoneyDiaryGetResponse } from "../../../../api/@types";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { Badge, Menu } from "@mantine/core";
 import { IconCopy, IconTrash, IconEdit, IconDots } from "@tabler/icons";
 import { useMoneyDiaryStore } from "../../../libs/store/moneyDiary";
+import { MoneyDiaryGetResponse } from "../../../../api/@types";
+import { Repeat } from "tabler-icons-react";
 
 type Props = {
   moneyDiary: MoneyDiaryGetResponse;
@@ -20,7 +21,7 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
       withdrawal: moneyDiary.withdrawal,
       payment: moneyDiary.payment,
       date: new Date(moneyDiary.date),
-      period: moneyDiary.period,
+      automaticRegistration: moneyDiary.automaticRegistration,
       expenseItemName: moneyDiary.expenseItemName,
       categories: moneyDiary.categories.map((category) => category.id).map(String),
     });
@@ -34,7 +35,7 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
       withdrawal: moneyDiary.withdrawal,
       payment: moneyDiary.payment,
       date: new Date(moneyDiary.date),
-      period: moneyDiary.period,
+      automaticRegistration: moneyDiary.automaticRegistration,
       expenseItemName: moneyDiary.expenseItemName,
       categories: moneyDiary.categories.map((category) => category.id).map(String),
     });
@@ -42,11 +43,14 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
 
   return (
     <tr>
-      <td className="w-20">{new Date(moneyDiary.date).getDate() + "日"}</td>
+      <td className="w-20 flex">
+        {new Date(moneyDiary.date).getDate() + "日"}
+        {moneyDiary.automaticRegistration && <Repeat className=" ml-2" size={18} strokeWidth={2} color={"black"} />}
+      </td>
       <td className="w-80">{moneyDiary.expenseItemName}</td>
       <td className="w-40">
-        <span className={minusColor(moneyDiary.withdrawal || 0 - (moneyDiary.payment || 0))}>
-          {(moneyDiary.withdrawal || 0 - (moneyDiary.payment || 0)).toLocaleString()}
+        <span className={minusColor(moneyDiary.incomeAndExpenditure)}>
+          {moneyDiary.incomeAndExpenditure.toLocaleString()}
         </span>
       </td>
       <td className="w-96">{moneyDiary.memo}</td>

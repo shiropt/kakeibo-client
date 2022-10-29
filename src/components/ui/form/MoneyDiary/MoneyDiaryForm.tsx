@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, Textarea, MultiSelect, Button } from "@mantine/core";
+import { TextInput, NumberInput, Textarea, MultiSelect, Button, Checkbox } from "@mantine/core";
 import { FC } from "react";
 import { DatePicker } from "@mantine/dates";
 import { moneyDiaryForm } from "../../../../libs/mantine/useForm/moneyDiaryForm";
@@ -7,7 +7,13 @@ import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
 
 export const MoneyDiaryForm: FC = () => {
   const { form, onSubmit } = moneyDiaryForm();
-  const { mode, setMode, resetMoneyDiary } = useMoneyDiaryStore();
+  const { mode, setMode, resetMoneyDiary, moneyDiary } = useMoneyDiaryStore();
+  const { categories } = useMoneyDiary();
+  const list = categories
+    ? categories.map((category) => {
+        return { value: category.id.toString(), label: category.name };
+      })
+    : [];
   const cancelEdit = () => {
     setMode("NEW");
     resetMoneyDiary();
@@ -52,18 +58,12 @@ export const MoneyDiaryForm: FC = () => {
       <div className=" flex">
         <p className=" mt-1 mr-2 w-20">カテゴリ</p>
         <MultiSelect
-          data={[
-            { value: "1", label: "食費" },
-            { value: "2", label: "給与" },
-            { value: "3", label: "家賃" },
-            { value: "4", label: "貯金" },
-            { value: "5", label: "臨時収入" },
-            { value: "6", label: "交際費" },
-          ]}
+          dropdownPosition="top"
+          data={list}
           className=" mb-4  w-80"
           placeholder="カテゴリを入力"
           searchable
-          nothingFound="Nothing found"
+          nothingFound="カテゴリが見つかりません"
           {...form.getInputProps("categories")}
         />
       </div>
@@ -71,6 +71,13 @@ export const MoneyDiaryForm: FC = () => {
         <p className=" mt-1 mr-2 w-20">メモ</p>
         <Textarea {...form.getInputProps("memo")} placeholder="メモを入力" className=" mb-4  w-80" />
       </div>
+      <Checkbox
+        {...form.getInputProps("automaticRegistration")}
+        size="md"
+        defaultChecked={moneyDiary.automaticRegistration}
+        className="ml-20 pl-2 mb-4"
+        label="毎月登録する(1日に自動で登録されます)"
+      />
       <div>
         <Button type="submit" fullWidth size="md" color="red">
           {mode === "EDIT" ? `編集完了` : "登録"}

@@ -1,16 +1,18 @@
-import { MoneyDiaryGetResponse } from "./../../api/@types/index";
 import useAspidaSWR from "@aspida/swr";
 import { apiClient } from "../hooks/useFetcher";
-import { useDateStore } from "../libs/store/date";
+import { useSearchStore } from "../libs/store/search";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
+import { MoneyDiaryGetResponse } from "../../api/@types";
 
 export const useMoneyDiary = () => {
-  const { month, year, setMonth, setYear } = useDateStore();
+  const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = useSearchStore();
   const { data, error, mutate } = useAspidaSWR(apiClient.money_diary.search, {
     headers: { userId: "1" },
-    query: { year, month },
+    query: { year, month, orderByDate, orderByIncomeAndExpenditure },
   });
+  const { data: categories } = useAspidaSWR(apiClient.category);
+
   const minusColor = (num: number) => {
     return num < 0 ? "text-red-500" : "";
   };
@@ -62,5 +64,6 @@ export const useMoneyDiary = () => {
     sumPayment,
     sumWithdrawal,
     openDeleteModal,
+    categories,
   };
 };

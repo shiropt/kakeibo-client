@@ -1,6 +1,6 @@
-import { MoneyDiaryDto } from "./../../../api/@types/index";
 import create from "zustand";
 import { devtools } from "zustand/middleware";
+import { MoneyDiaryDto } from "../../../api/@types";
 
 type Mode = "NEW" | "EDIT" | "COPY";
 type State = {
@@ -19,7 +19,7 @@ export const useMoneyDiaryStore = create<State>()(
       withdrawal: 0,
       payment: 0,
       date: new Date(),
-      period: 0,
+      automaticRegistration: false,
       expenseItemName: "",
       categories: [],
     },
@@ -35,7 +35,7 @@ export const useMoneyDiaryStore = create<State>()(
           withdrawal: 0,
           payment: 0,
           date: new Date(),
-          period: 0,
+          automaticRegistration: false,
           expenseItemName: "",
           categories: [],
         },

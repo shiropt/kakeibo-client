@@ -75,6 +75,16 @@ paths:
           in: query
           schema:
             type: string
+        - name: orderByDate
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: orderByIncomeAndExpenditure
+          required: true
+          in: query
+          schema:
+            type: string
         - name: userId
           required: true
           in: header
@@ -146,6 +156,71 @@ paths:
       responses:
         "200":
           description: ""
+  /api/v1/category:
+    post:
+      operationId: CategoryController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryDto"
+      responses:
+        "201":
+          description: ""
+    get:
+      operationId: CategoryController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /api/v1/category/{id}:
+    get:
+      operationId: CategoryController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    patch:
+      operationId: CategoryController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryDto"
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: CategoryController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
 info:
   title: kakeibo-api
   description: ""
@@ -168,11 +243,13 @@ components:
           type: number
         payment:
           type: number
+        incomeAndExpenditure:
+          type: number
         date:
           format: date-time
           type: string
-        period:
-          type: number
+        automaticRegistration:
+          type: boolean
         expenseItemName:
           type: string
         categories:
@@ -190,8 +267,9 @@ components:
         - memo
         - withdrawal
         - payment
+        - incomeAndExpenditure
         - date
-        - period
+        - automaticRegistration
         - expenseItemName
         - categories
         - createdAt
@@ -208,8 +286,8 @@ components:
         date:
           format: date-time
           type: string
-        period:
-          type: number
+        automaticRegistration:
+          type: boolean
         expenseItemName:
           type: string
         categories:
@@ -221,6 +299,22 @@ components:
         - withdrawal
         - payment
         - date
-        - period
+        - automaticRegistration
         - expenseItemName
         - categories
+    CreateCategoryDto:
+      type: object
+      properties: {}
+    Category:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UpdateCategoryDto:
+      type: object
+      properties: {}

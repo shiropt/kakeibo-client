@@ -1,12 +1,11 @@
-import { MoneyDiaryGetResponse } from "./../../../../api/@types/index";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
-import { MoneyDiaryDto } from "../../../../api/@types";
 import { apiClient } from "../../../hooks/useFetcher";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { showNotification } from "@mantine/notifications";
 import { useMoneyDiaryStore } from "../../store/moneyDiary";
 import { useEffect } from "react";
+import { MoneyDiaryDto } from "../../../../api/@types";
 
 export const moneyDiaryForm = () => {
   const { mutate } = useMoneyDiary();
@@ -17,7 +16,7 @@ export const moneyDiaryForm = () => {
       withdrawal: moneyDiary.withdrawal,
       payment: moneyDiary.payment,
       date: moneyDiary.date,
-      period: moneyDiary.period,
+      automaticRegistration: moneyDiary.automaticRegistration,
       expenseItemName: moneyDiary.expenseItemName,
       categories: moneyDiary.categories,
     });
@@ -32,7 +31,7 @@ export const moneyDiaryForm = () => {
     withdrawal: z.number().nullable(),
     payment: z.number().nullable(),
     date: z.date(),
-    period: z.number(),
+    automaticRegistration: z.boolean(),
     expenseItemName: z
       .string()
       .min(1, { message: "費目名は必須です" })

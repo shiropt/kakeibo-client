@@ -10,6 +10,8 @@ export type Methods = {
     query: {
       year: string
       month: string
+      orderByDate: string
+      orderByIncomeAndExpenditure: string
     }
 
     status: 200
