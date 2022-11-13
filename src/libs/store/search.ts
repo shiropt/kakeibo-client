@@ -1,5 +1,6 @@
 import create from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
+
 type State = {
   year: string;
   month: string;
@@ -13,28 +14,30 @@ type State = {
 };
 
 export const useSearchStore = create<State>()(
-  devtools((set, get) => ({
-    year: new Date().getFullYear().toString(),
-    month: (new Date().getMonth() + 1).toString(),
-    orderByDate: "asc",
-    orderByIncomeAndExpenditure: "",
-    setYear: (year) => {
-      set({ year });
-    },
-    setMonth: (month) => {
-      set({ month });
-    },
-    setOrderByDate: () => {
-      const orderByDate = get().orderByDate === "asc" ? "desc" : "asc";
-      set({ orderByDate });
-    },
-    setOrderByIncomeAndExpenditure: () => {
-      const now = get().orderByIncomeAndExpenditure;
-      const orderByIncomeAndExpenditure = now === "" ? "payment" : now === "payment" ? "withdrawal" : "payment";
-      set({ orderByIncomeAndExpenditure });
-    },
-    resetOrderByIncomeAndExpenditure: () => {
-      set({ orderByIncomeAndExpenditure: "" });
-    },
-  }))
+  devtools(
+    persist((set, get) => ({
+      year: new Date().getFullYear().toString(),
+      month: (new Date().getMonth() + 1).toString(),
+      orderByDate: "asc",
+      orderByIncomeAndExpenditure: "",
+      setYear: (year) => {
+        set({ year });
+      },
+      setMonth: (month) => {
+        set({ month });
+      },
+      setOrderByDate: () => {
+        const orderByDate = get().orderByDate === "asc" ? "desc" : "asc";
+        set({ orderByDate });
+      },
+      setOrderByIncomeAndExpenditure: () => {
+        const now = get().orderByIncomeAndExpenditure;
+        const orderByIncomeAndExpenditure = now === "" ? "payment" : now === "payment" ? "withdrawal" : "payment";
+        set({ orderByIncomeAndExpenditure });
+      },
+      resetOrderByIncomeAndExpenditure: () => {
+        set({ orderByIncomeAndExpenditure: "" });
+      },
+    }))
+  )
 );

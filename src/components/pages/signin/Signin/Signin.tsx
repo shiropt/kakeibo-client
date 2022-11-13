@@ -1,27 +1,88 @@
-import { Container, Title, Button, Divider, Text } from "@mantine/core";
+import { Container, Title, Button, Divider, Text, Anchor } from "@mantine/core";
 import { BrandGoogle, Mail } from "tabler-icons-react";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
+import { emailAndPasswordSignin, googleSignin } from "../../../../libs/firebase/auth";
+import { useFetchers } from "../../../../hooks/useFetcher";
+import { useUserStore } from "../../../../libs/store/user";
+import Axios from "axios";
+import { useLoadingStore } from "../../../../libs/store/loading";
+import { AuthForm } from "../../../ui/form";
 
 export const Signin: FC = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const { apiClient } = useFetchers();
+  const { setAccessToken } = useUserStore();
+  const { toggleIsLoading } = useLoadingStore();
   const router = useRouter();
+  const signin = useCallback(async (values: { email: string; password: string }) => {
+    toggleIsLoading();
+    try {
+      const result = await emailAndPasswordSignin(values.email, values.password);
+      if (typeof result === "string" || !result) {
+        toggleIsLoading();
+        setErrorMessage("メールアドレス、またはパスワードが正しくありません");
+        return;
+      }
+      const user = await apiClient.auth.login.post({
+        body: { username: result.email!, password: result.uid },
+      });
+      setAccessToken(user.body.access_token);
+      toggleIsLoading();
+    } catch (e) {
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
+        setErrorMessage("メールアドレス、またはパスワードが正しくありません");
+        toggleIsLoading();
+      }
+      return;
+    }
+    router.push("/");
+  }, []);
+  const googleSigninClicked = async () => {
+    toggleIsLoading();
+    try {
+      router.push("/");
+      const user = await googleSignin();
+      const { uid, email } = user;
+      await apiClient.user.post({ body: { uid, email } });
+      const authResult = await apiClient.auth.login.post({
+        body: { username: email, password: uid },
+      });
+      setAccessToken(authResult.body.access_token);
+
+      toggleIsLoading();
+    } catch (e) {
+      if (Axios.isAxiosError(e) && e.response && e.response.status === 401) {
+        console.log(e);
+      }
+      toggleIsLoading();
+      return;
+    }
+  };
 
   return (
     <Container size="sm" py="100px" className="">
       <Title order={3} data-testid="signin-title" className="text-center">
         ログイン
       </Title>
+      <AuthForm
+        errorMessage={errorMessage}
+        submit={signin}
+        resetErrorMessage={() => setErrorMessage("")}
+        kind="signin"
+      />
+      <Anchor data-testid="link" onClick={() => router.push("/signin/password/reset")} className=" p-4 float-right">
+        パスワードを忘れた方はこちら &gt;
+      </Anchor>
       <Button
-        className="my-8"
-        size="lg"
         fullWidth
-        leftIcon={<Mail />}
-        color="red"
-        onClick={() => router.push("/signin/email")}
+        size="lg"
+        leftIcon={<BrandGoogle />}
+        variant="outline"
+        color="gray"
+        onClick={googleSigninClicked}
+        className="mt-16"
       >
-        メールアドレスでログイン
-      </Button>
-      <Button fullWidth size="lg" leftIcon={<BrandGoogle />} variant="outline" color="gray">
         Googleでログイン
       </Button>
       <Divider my="sm" className="my-10" />

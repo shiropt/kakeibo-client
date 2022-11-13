@@ -1,22 +1,40 @@
-import axios from "axios";
+import { useUserStore } from "./../libs/store/user";
+import axios, { Axios } from "axios";
 import useSWR from "swr";
 import axiosClient from "@aspida/axios";
 import api from "../../api/api/$api";
-export const { v1: apiClient } = api(axiosClient(axios, { baseURL: "http://localhost:3000" }));
-
-const fetcher = async <T>(url: string) => {
-  try {
-    const { data } = await axios.get<T>(url, { headers: { userId: "1" } });
-    return data;
-  } catch (error) {
-    throw new Error();
-  }
-};
+import { useRouter } from "next/router";
+import { openContextModal, closeModal } from "@mantine/modals";
 
 export const useFetchers = () => {
+  const { accessToken } = useUserStore();
+  const router = useRouter();
+  const axiosConfig = { baseURL: "http://localhost:3000", headers: { Authorization: `Bearer ${accessToken}` } };
+  const { v1: apiClient } = api(axiosClient(axios, axiosConfig));
+  const fetcher = async <T>(url: string) => {
+    // throw new Error();
+    try {
+      const { data } = await axios.get<T>(url, axiosConfig);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        openContextModal({
+          innerProps: { modalBody: "再度ログインし直してください" },
+          modal: "alert",
+          centered: true,
+          withCloseButton: false,
+          withinPortal: false,
+          title: "アクセスの有効期限が切れています",
+          onClose: () => router.push("/signin"),
+        });
+      }
+      throw new Error();
+    }
+  };
+
   const useFetch = <T>(url: string, shouldFetch: boolean = true) => {
-    const { data, error } = useSWR<T>(shouldFetch ? url : null, fetcher);
-    return { data, error, isLoading: !error && !data };
+    const { data, error, mutate } = useSWR<T>(shouldFetch ? url : null, fetcher);
+    return { data, error, isLoading: !error && !data, mutate };
   };
 
   const postData = async <T, U>(url: string, params: U) => {
@@ -36,5 +54,5 @@ export const useFetchers = () => {
     }
   };
 
-  return { useFetch, postData, deleteData };
+  return { useFetch, postData, deleteData, apiClient };
 };

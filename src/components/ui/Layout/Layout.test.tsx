@@ -7,7 +7,6 @@ initTestHelpers();
 describe("Layoutのテスト", () => {
   it("初期表示でliteテーマアイコンであること", async () => {
     render(<Layout>main</Layout>);
-    expect(screen.getByTestId("moon")).toBeInTheDocument();
   });
   // it("アイコンクリックでテーマが切り替わること", async () => {
   //   const { page } = await getPage({ route: "/" });

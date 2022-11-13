@@ -1,10 +1,13 @@
-import { Input, PasswordInput, TextInput, Button } from "@mantine/core";
+import { Input, PasswordInput, TextInput, Button, Text } from "@mantine/core";
 import { FC } from "react";
 import { useAuthForm } from "../../../../libs/mantine/useForm/authForm";
+import { Mail } from "tabler-icons-react";
 
 type Props = {
-  submit: () => void;
+  submit: (values: any) => void;
   kind: "signin" | "signup" | "auth" | "reset";
+  errorMessage?: string;
+  resetErrorMessage?: VoidFunction;
 };
 
 export const AuthForm: FC<Props> = (props) => {
@@ -15,18 +18,13 @@ export const AuthForm: FC<Props> = (props) => {
       <form onSubmit={form.onSubmit(props.submit)}>
         <Input.Wrapper id="mail-label" label="メールアドレス">
           <TextInput {...form.getInputProps("email")} size="lg" />
+          <Text color={"red"}>{props.errorMessage}</Text>
         </Input.Wrapper>
         <Input.Wrapper className="my-4" label="パスワード">
           <PasswordInput {...form.getInputProps("password")} size="lg" />
         </Input.Wrapper>
-        <Input.Wrapper label="ニックネーム">
-          <TextInput {...form.getInputProps("name")} size="lg" />
-        </Input.Wrapper>
-        <Input.Wrapper label="電話番号">
-          <TextInput {...form.getInputProps("phone")} size="lg" />
-        </Input.Wrapper>
         <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
-          次へ
+          登録
         </Button>
       </form>
     );
@@ -39,9 +37,18 @@ export const AuthForm: FC<Props> = (props) => {
         </Input.Wrapper>
         <Input.Wrapper className="my-4" label="パスワード">
           <PasswordInput data-testid="password-input" {...form.getInputProps("password")} size="lg" />
+          <Text color={"red"}>{props.errorMessage}</Text>
         </Input.Wrapper>
-        <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
-          ログイン
+        <Button
+          type="submit"
+          onClick={props.resetErrorMessage}
+          fullWidth
+          leftIcon={<Mail />}
+          size="lg"
+          color="red"
+          className="mt-6"
+        >
+          メールアドレスでログイン
         </Button>
       </form>
     );

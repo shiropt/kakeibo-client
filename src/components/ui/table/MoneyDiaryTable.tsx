@@ -5,13 +5,22 @@ import { FallbackTable } from "./FallbackTable";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { DetailRow } from "./DetailRow";
 import { useSearchStore } from "../../../libs/store/search";
+import { useRouter } from "next/router";
+import { useFetchers } from "../../../hooks/useFetcher";
+import { MoneyDiaryGetResponse } from "../../../../api/@types";
+import useSWR from "swr";
+
 export const MoneyDiaryTable: FC = () => {
   const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = useSearchStore();
+  const router = useRouter();
 
   const { data, error, minusColor, sumPayment, sumWithdrawal } = useMoneyDiary();
+  if (error) {
+    console.log({ error });
+  }
   if (!data) return <FallbackTable isLoading={true} />;
+
   if (data.length === 0) return <FallbackTable isLoading={false} />;
-  if (error) return <p>Error</p>;
 
   const sortByDate = () => {
     setOrderByDate();

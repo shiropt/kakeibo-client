@@ -1,4 +1,18 @@
 /* eslint-disable */
+export type UserLoginDto = {
+  username: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  access_token: string;
+};
+
+export type UserCreateDto = {
+  uid: string;
+  email: string;
+};
+
 export type MoneyDiaryGetResponse = {
   id: number;
   memo: string;

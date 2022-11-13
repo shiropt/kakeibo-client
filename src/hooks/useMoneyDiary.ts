@@ -1,16 +1,31 @@
+import { useFetchers } from "./useFetcher";
 import useAspidaSWR from "@aspida/swr";
-import { apiClient } from "../hooks/useFetcher";
 import { useSearchStore } from "../libs/store/search";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { MoneyDiaryGetResponse } from "../../api/@types";
 
+const getPath = () => {
+  const searchMoneyDiary = (params: {
+    year: string;
+    month: string;
+    orderByDate: "asc" | "desc";
+    orderByIncomeAndExpenditure: "" | "payment" | "withdrawal";
+  }) => {
+    const { year, month, orderByDate, orderByIncomeAndExpenditure } = params;
+    return `api/v1/money-diary/search?year=${year}&month=${month}&orderByDate=${orderByDate}&orderByIncomeAndExpenditure=${orderByIncomeAndExpenditure}`;
+  };
+  return { searchMoneyDiary };
+};
+
 export const useMoneyDiary = () => {
+  const { apiClient, useFetch } = useFetchers();
   const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = useSearchStore();
-  const { data, error, mutate } = useAspidaSWR(apiClient.money_diary.search, {
-    headers: { userId: "1" },
-    query: { year, month, orderByDate, orderByIncomeAndExpenditure },
-  });
+  const { searchMoneyDiary } = getPath();
+  const { data, error, mutate } = useFetch<MoneyDiaryGetResponse[]>(
+    searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure })
+  );
+
   const { data: categories } = useAspidaSWR(apiClient.category);
 
   const minusColor = (num: number) => {
@@ -58,12 +73,12 @@ export const useMoneyDiary = () => {
     year,
     setMonth,
     setYear,
-    mutate,
     minusColor,
     total,
     sumPayment,
     sumWithdrawal,
     openDeleteModal,
     categories,
+    mutate,
   };
 };

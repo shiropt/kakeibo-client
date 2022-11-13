@@ -1,6 +1,6 @@
+import { useFetchers } from "./../../../hooks/useFetcher";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
-import { apiClient } from "../../../hooks/useFetcher";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { showNotification } from "@mantine/notifications";
 import { useMoneyDiaryStore } from "../../store/moneyDiary";
@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { MoneyDiaryDto } from "../../../../api/@types";
 
 export const moneyDiaryForm = () => {
+  const { apiClient } = useFetchers();
   const { mutate } = useMoneyDiary();
   const { moneyDiary, mode, setMode, resetMoneyDiary } = useMoneyDiaryStore();
   useEffect(() => {
@@ -51,7 +52,6 @@ export const moneyDiaryForm = () => {
         withdrawal: data.withdrawal || 0,
         payment: data.payment || 0,
       },
-      headers: { userId: "1" },
     });
     form.reset();
     resetMoneyDiary();
@@ -71,7 +71,6 @@ export const moneyDiaryForm = () => {
         withdrawal: data.withdrawal || 0,
         payment: data.payment || 0,
       },
-      headers: { userId: "1" },
     });
     form.reset();
     resetMoneyDiary();

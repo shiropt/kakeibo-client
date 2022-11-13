@@ -12,10 +12,6 @@ export type Methods = {
   }
 
   post: {
-    reqHeaders?: {
-      userId: string
-    } | undefined
-
     status: 201
     reqBody: Types.MoneyDiaryDto
   }

@@ -2,12 +2,9 @@
 import type * as Types from '../../../../@types'
 
 export type Methods = {
-  put: {
-    status: 200
-    reqBody: Types.MoneyDiaryDto
-  }
-
-  delete: {
-    status: 200
+  post: {
+    status: 201
+    resBody: Types.LoginResponse
+    reqBody: Types.UserLoginDto
   }
 }

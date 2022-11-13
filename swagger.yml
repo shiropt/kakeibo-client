@@ -7,22 +7,33 @@ paths:
       responses:
         "200":
           description: ""
-  /api/v1/user/{id}:
-    get:
-      operationId: UserController_getUser
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
+  /api/v1/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginDto"
       responses:
-        "200":
+        "201":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
   /api/v1/user:
     post:
       operationId: UserController_createUser
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateDto"
       responses:
         "201":
           description: ""
@@ -46,12 +57,7 @@ paths:
                   $ref: "#/components/schemas/MoneyDiaryGetResponse"
     post:
       operationId: MoneyDiaryController_createMoneyDiary
-      parameters:
-        - name: userId
-          required: true
-          in: header
-          schema:
-            type: string
+      parameters: []
       requestBody:
         required: true
         content:
@@ -83,11 +89,6 @@ paths:
         - name: orderByIncomeAndExpenditure
           required: true
           in: query
-          schema:
-            type: string
-        - name: userId
-          required: true
-          in: header
           schema:
             type: string
       responses:
@@ -126,11 +127,6 @@ paths:
     put:
       operationId: MoneyDiaryController_updateMoneyDiary
       parameters:
-        - name: userId
-          required: true
-          in: header
-          schema:
-            type: string
         - name: id
           required: true
           in: path
@@ -232,6 +228,33 @@ tags:
 servers: []
 components:
   schemas:
+    UserLoginDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+      required:
+        - access_token
+    UserCreateDto:
+      type: object
+      properties:
+        uid:
+          type: string
+        email:
+          type: string
+      required:
+        - uid
+        - email
     MoneyDiaryGetResponse:
       type: object
       properties:

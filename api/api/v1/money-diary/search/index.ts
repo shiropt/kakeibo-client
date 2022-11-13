@@ -3,10 +3,6 @@ import type * as Types from '../../../../@types'
 
 export type Methods = {
   get: {
-    reqHeaders?: {
-      userId: string
-    } | undefined
-
     query: {
       year: string
       month: string
