@@ -4,8 +4,13 @@ import { DatePicker } from "@mantine/dates";
 import { moneyDiaryForm } from "../../../../libs/mantine/useForm/moneyDiaryForm";
 import { useMoneyDiaryStore } from "../../../../libs/store/moneyDiary";
 import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
+import { MoneyDiaryDto } from "../../../../../api/@types";
 
-export const MoneyDiaryForm: FC = () => {
+type Props = {
+  closeDrawer?: VoidFunction;
+};
+
+export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
   const { form, onSubmit } = moneyDiaryForm();
   const { mode, setMode, resetMoneyDiary, moneyDiary } = useMoneyDiaryStore();
   const { categories } = useMoneyDiary();
@@ -17,10 +22,16 @@ export const MoneyDiaryForm: FC = () => {
   const cancelEdit = () => {
     setMode("NEW");
     resetMoneyDiary();
+    closeDrawer && closeDrawer();
+  };
+
+  const onClickSubmit = (moneyDiary: MoneyDiaryDto) => {
+    onSubmit(moneyDiary);
+    closeDrawer && closeDrawer();
   };
 
   return (
-    <form onSubmit={form.onSubmit(onSubmit)} className=" border-2 mt-4 mr-2 border-gray-100 p-4">
+    <form onSubmit={form.onSubmit(onClickSubmit)} className=" border-2 mt-4 mr-2 border-gray-100 p-4">
       <div className="flex">
         <p className=" mt-1 mr-2 w-20">費目名</p>
         <TextInput {...form.getInputProps("expenseItemName")} className=" mb-4 w-80" placeholder="費目名を入力" />

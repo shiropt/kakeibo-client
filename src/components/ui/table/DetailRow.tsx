@@ -43,14 +43,16 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
 
   return (
     <tr>
-      <td className="w-20 flex">
-        {new Date(moneyDiary.date).getDate() + "日"}
-        {moneyDiary.automaticRegistration && <Repeat className=" ml-2" size={18} strokeWidth={2} color={"black"} />}
+      <td>
+        <p className="flex">
+          {new Date(moneyDiary.date).getDate() + "日"}
+          {moneyDiary.automaticRegistration && <Repeat className=" ml-2" size={18} strokeWidth={2} color={"green"} />}
+        </p>
       </td>
       <td className="w-80">{moneyDiary.expenseItemName}</td>
       <td className="w-40">
         <span className={minusColor(moneyDiary.incomeAndExpenditure)}>
-          {moneyDiary.incomeAndExpenditure.toLocaleString()}
+          ¥{moneyDiary.incomeAndExpenditure.toLocaleString()}
         </span>
       </td>
       <td className="w-96">{moneyDiary.memo}</td>

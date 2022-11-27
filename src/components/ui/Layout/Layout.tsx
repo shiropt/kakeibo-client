@@ -1,11 +1,15 @@
 import Head from "next/head";
-import { FC, ReactNode, useContext } from "react";
-import { LoadingOverlay, Menu, Text, Header } from "@mantine/core";
-import { MoonOff, Moon } from "tabler-icons-react";
+import { FC, ReactNode, useCallback, useContext, useState } from "react";
+import { Drawer, Menu, Text, Header } from "@mantine/core";
 import { ThemeContext } from "../../../libs/mantine/AppProvider";
 import { IconDots } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { openConfirmModal } from "@mantine/modals";
+import { signOut } from "../../../libs/firebase/auth";
+import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { MoneyDiaryForm } from "../../ui/form/MoneyDiary/MoneyDiaryForm";
+import { CirclePlus } from "tabler-icons-react";
+import { moneyDiaryForm } from "../../../libs/mantine/useForm/moneyDiaryForm";
 
 type Props = {
   children: ReactNode;
@@ -13,15 +17,23 @@ type Props = {
 };
 
 export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
+  const { openedDrawer, setOpenedDrawer } = moneyDiaryForm();
+  // const [opened, setOpened] = useState(false);
+
   const { toggleTheme } = useContext(ThemeContext);
+  const { largeScreen } = useMediaQuery();
   const router = useRouter();
 
+  const onConfirm = useCallback(async () => {
+    await signOut();
+    router.push("/signin");
+  }, []);
   return (
     <div>
       <Head>
         <title>{title}</title>
       </Head>
-      <Header className=" w-screen" height={60} p="xs">
+      <Header className=" fixed w-screen" height={60} p="xs">
         <Menu closeOnItemClick={false} shadow="md" width={200} trigger="hover" openDelay={100} closeDelay={400}>
           <Menu.Target>
             <p className="mr-2 mt-2 cursor-pointer float-right">
@@ -42,17 +54,25 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
                     onCancel: () => {
                       return;
                     },
-                    onConfirm: () => router.push("/signin"),
+                    onConfirm,
                   })
                 }
               >
                 ログアウト
               </Text>
             </Menu.Item>
+            {!largeScreen && (
+              <Menu.Item>
+                <Text onClick={() => setOpenedDrawer(true)}>登録する</Text>
+              </Menu.Item>
+            )}
           </Menu.Dropdown>
+          <Drawer position="right" opened={openedDrawer} onClose={() => setOpenedDrawer(false)} padding="md" size="xl">
+            <MoneyDiaryForm />
+          </Drawer>
         </Menu>
       </Header>
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen pt-16">{children}</main>
     </div>
   );
 };

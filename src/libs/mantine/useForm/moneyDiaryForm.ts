@@ -4,10 +4,12 @@ import { z } from "zod";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { showNotification } from "@mantine/notifications";
 import { useMoneyDiaryStore } from "../../store/moneyDiary";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MoneyDiaryDto } from "../../../../api/@types";
 
 export const moneyDiaryForm = () => {
+  const [openedDrawer, setOpenedDrawer] = useState(false);
+
   const { apiClient } = useFetchers();
   const { mutate } = useMoneyDiary();
   const { moneyDiary, mode, setMode, resetMoneyDiary } = useMoneyDiaryStore();
@@ -74,8 +76,8 @@ export const moneyDiaryForm = () => {
     });
     form.reset();
     resetMoneyDiary();
-    setMode("NEW");
     mutate();
+    setMode("NEW");
     showNotification({
       title: `${data.date.getFullYear()}年${data.date.getMonth() + 1}月`,
       message: `${data.expenseItemName}を更新しました`,
@@ -90,5 +92,5 @@ export const moneyDiaryForm = () => {
     }
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, openedDrawer, setOpenedDrawer };
 };
