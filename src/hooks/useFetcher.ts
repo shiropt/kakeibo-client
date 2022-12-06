@@ -1,3 +1,4 @@
+import { baseURL } from "./../utils/path";
 import { useUserStore } from "./../libs/store/user";
 import axios, { Axios } from "axios";
 import useSWR from "swr";
@@ -9,10 +10,10 @@ import { openContextModal, closeModal } from "@mantine/modals";
 export const useFetchers = () => {
   const { accessToken } = useUserStore();
   const router = useRouter();
-  const axiosConfig = { baseURL: "http://localhost:3000", headers: { Authorization: `Bearer ${accessToken}` } };
+  const axiosConfig = { baseURL, headers: { Authorization: `Bearer ${accessToken}` } };
   const { v1: apiClient } = api(axiosClient(axios, axiosConfig));
+
   const fetcher = async <T>(url: string) => {
-    // throw new Error();
     try {
       const { data } = await axios.get<T>(url, axiosConfig);
       return data;

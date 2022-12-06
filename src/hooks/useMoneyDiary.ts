@@ -4,19 +4,7 @@ import { useSearchStore } from "../libs/store/search";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { MoneyDiaryGetResponse } from "../../api/@types";
-
-const getPath = () => {
-  const searchMoneyDiary = (params: {
-    year: string;
-    month: string;
-    orderByDate: "asc" | "desc";
-    orderByIncomeAndExpenditure: "" | "payment" | "withdrawal";
-  }) => {
-    const { year, month, orderByDate, orderByIncomeAndExpenditure } = params;
-    return `api/v1/money-diary/search?year=${year}&month=${month}&orderByDate=${orderByDate}&orderByIncomeAndExpenditure=${orderByIncomeAndExpenditure}`;
-  };
-  return { searchMoneyDiary };
-};
+import { getPath } from "../utils/path";
 
 export const useMoneyDiary = () => {
   const { apiClient, useFetch } = useFetchers();
