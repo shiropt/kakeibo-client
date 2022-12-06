@@ -5,7 +5,7 @@ import { ServerStyles, createStylesServer } from "@mantine/next";
 export default class _Document extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    const stylesServer = createStylesServer({ key: "rtl", stylisPlugins: [rtlPlugin] });
+    const stylesServer = createStylesServer();
     return {
       ...initialProps,
       styles: (
@@ -17,3 +17,23 @@ export default class _Document extends Document {
     };
   }
 }
+// import { createGetInitialProps } from "@mantine/next";
+// import Document, { Head, Html, Main, NextScript } from "next/document";
+
+// const getInitialProps = createGetInitialProps();
+
+// export default class _Document extends Document {
+//   static getInitialProps = getInitialProps;
+
+//   render() {
+//     return (
+//       <Html>
+//         <Head />
+//         <body>
+//           <Main />
+//           <NextScript />
+//         </body>
+//       </Html>
+//     );
+//   }
+// }

@@ -1,0 +1,343 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /api/v1/user:
+    post:
+      operationId: UserController_createUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateDto"
+      responses:
+        "201":
+          description: ""
+  /api/v1/money-diary:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiary
+      parameters:
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
+    post:
+      operationId: MoneyDiaryController_createMoneyDiary
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoneyDiaryDto"
+      responses:
+        "201":
+          description: ""
+  /api/v1/money-diary/search:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiaryByYear
+      parameters:
+        - name: year
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: month
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: orderByDate
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: orderByIncomeAndExpenditure
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
+  /api/v1/money-diary/month:
+    get:
+      operationId: MoneyDiaryController_getMoneyDiaryByMonth
+      parameters:
+        - name: month
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: header
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MoneyDiaryGetResponse"
+  /api/v1/money-diary/{id}:
+    put:
+      operationId: MoneyDiaryController_updateMoneyDiary
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoneyDiaryDto"
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: MoneyDiaryController_deleteMoneyDiary
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /api/v1/category:
+    post:
+      operationId: CategoryController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryDto"
+      responses:
+        "201":
+          description: ""
+    get:
+      operationId: CategoryController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /api/v1/category/{id}:
+    get:
+      operationId: CategoryController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    patch:
+      operationId: CategoryController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryDto"
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: CategoryController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+info:
+  title: kakeibo-api
+  description: ""
+  version: "1.0"
+  contact: {}
+tags:
+  - name: kakeibo-api
+    description: ""
+servers: []
+components:
+  schemas:
+    UserLoginDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+      required:
+        - access_token
+    UserCreateDto:
+      type: object
+      properties:
+        uid:
+          type: string
+        email:
+          type: string
+      required:
+        - uid
+        - email
+    MoneyDiaryGetResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        memo:
+          type: string
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        incomeAndExpenditure:
+          type: number
+        date:
+          format: date-time
+          type: string
+        automaticRegistration:
+          type: boolean
+        expenseItemName:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - memo
+        - withdrawal
+        - payment
+        - incomeAndExpenditure
+        - date
+        - automaticRegistration
+        - expenseItemName
+        - categories
+        - createdAt
+        - updatedAt
+    MoneyDiaryDto:
+      type: object
+      properties:
+        memo:
+          type: string
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        date:
+          format: date-time
+          type: string
+        automaticRegistration:
+          type: boolean
+        expenseItemName:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+      required:
+        - memo
+        - withdrawal
+        - payment
+        - date
+        - automaticRegistration
+        - expenseItemName
+        - categories
+    CreateCategoryDto:
+      type: object
+      properties: {}
+    Category:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UpdateCategoryDto:
+      type: object
+      properties: {}

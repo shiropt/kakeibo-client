@@ -1,10 +1,13 @@
-import { InputWrapper, PasswordInput, TextInput, Button } from "@mantine/core";
+import { Input, PasswordInput, TextInput, Button, Text } from "@mantine/core";
 import { FC } from "react";
 import { useAuthForm } from "../../../../libs/mantine/useForm/authForm";
+import { Mail } from "tabler-icons-react";
 
 type Props = {
-  submit: () => void;
+  submit: (values: any) => void;
   kind: "signin" | "signup" | "auth" | "reset";
+  errorMessage?: string;
+  resetErrorMessage?: VoidFunction;
 };
 
 export const AuthForm: FC<Props> = (props) => {
@@ -13,20 +16,15 @@ export const AuthForm: FC<Props> = (props) => {
   if (props.kind === "signup")
     return (
       <form onSubmit={form.onSubmit(props.submit)}>
-        <InputWrapper id="mail-label" label="メールアドレス">
+        <Input.Wrapper id="mail-label" label="メールアドレス">
           <TextInput {...form.getInputProps("email")} size="lg" />
-        </InputWrapper>
-        <InputWrapper className="my-4" label="パスワード">
+          <Text color={"red"}>{props.errorMessage}</Text>
+        </Input.Wrapper>
+        <Input.Wrapper className="my-4" label="パスワード">
           <PasswordInput {...form.getInputProps("password")} size="lg" />
-        </InputWrapper>
-        <InputWrapper label="ニックネーム">
-          <TextInput {...form.getInputProps("name")} size="lg" />
-        </InputWrapper>
-        <InputWrapper label="電話番号">
-          <TextInput {...form.getInputProps("phone")} size="lg" />
-        </InputWrapper>
+        </Input.Wrapper>
         <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
-          次へ
+          登録
         </Button>
       </form>
     );
@@ -34,14 +32,23 @@ export const AuthForm: FC<Props> = (props) => {
   if (props.kind === "signin")
     return (
       <form onSubmit={form.onSubmit(props.submit)}>
-        <InputWrapper label="メールアドレス">
+        <Input.Wrapper label="メールアドレス">
           <TextInput data-testid="mail-input" {...form.getInputProps("email")} size="lg" />
-        </InputWrapper>
-        <InputWrapper className="my-4" label="パスワード">
+        </Input.Wrapper>
+        <Input.Wrapper className="my-4" label="パスワード">
           <PasswordInput data-testid="password-input" {...form.getInputProps("password")} size="lg" />
-        </InputWrapper>
-        <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
-          ログイン
+          <Text color={"red"}>{props.errorMessage}</Text>
+        </Input.Wrapper>
+        <Button
+          type="submit"
+          onClick={props.resetErrorMessage}
+          fullWidth
+          leftIcon={<Mail />}
+          size="lg"
+          color="red"
+          className="mt-6"
+        >
+          メールアドレスでログイン
         </Button>
       </form>
     );
@@ -49,9 +56,9 @@ export const AuthForm: FC<Props> = (props) => {
   if (props.kind === "auth")
     return (
       <form onSubmit={form.onSubmit(props.submit)}>
-        <InputWrapper label="認証番号">
+        <Input.Wrapper label="認証番号">
           <TextInput {...form.getInputProps("authNumber")} size="lg" />
-        </InputWrapper>
+        </Input.Wrapper>
         <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
           認証して完了する
         </Button>
@@ -60,9 +67,9 @@ export const AuthForm: FC<Props> = (props) => {
 
   return (
     <form onSubmit={form.onSubmit(props.submit)}>
-      <InputWrapper label="メールアドレス">
+      <Input.Wrapper label="メールアドレス">
         <TextInput {...form.getInputProps("email")} size="lg" />
-      </InputWrapper>
+      </Input.Wrapper>
       <Button type="submit" fullWidth size="lg" color="red" className="mt-12">
         パスワードをリセットする
       </Button>

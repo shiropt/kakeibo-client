@@ -15,7 +15,7 @@ export const useAuthForm = (kind: "signin" | "signup" | "auth" | "reset") => {
     authNumber: z.string().min(1, { message: "認証番号は必須です" }),
   });
 
-  const signupSchema = baseSchema.pick({ email: true, password: true, name: true, phone: true });
+  const signupSchema = baseSchema.pick({ email: true, password: true });
   const signinSchema = baseSchema.pick({ email: true, password: true });
   const resetSchema = baseSchema.pick({ email: true });
   const authSchema = baseSchema.pick({ authNumber: true });
