@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { MoneyDiaryForm } from "../../ui/form/MoneyDiary/MoneyDiaryForm";
 import { Layout } from "../../ui/Layout";
 import { MoneyDiaryTable } from "../../ui/table/MoneyDiaryTable";
 import { SelectYearAndMonth } from "../../ui/select/SelectTwoPieces";
-import { Drawer, Grid } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
 export const Home: FC = () => {
