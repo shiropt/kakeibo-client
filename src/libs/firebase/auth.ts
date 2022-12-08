@@ -6,6 +6,7 @@ import {
   UserInfo,
   User,
   signInWithEmailAndPassword,
+  signOut as signOutByAuth,
 } from "firebase/auth";
 import { app } from "./config";
 type FirebaseError = {
@@ -44,6 +45,14 @@ export const googleSignin = async (): Promise<User | any> => {
   try {
     const response = await signInWithPopup(auth, provider);
     return response.user;
+  } catch (e) {
+    return e;
+  }
+};
+export const signOut = async (): Promise<User | any> => {
+  try {
+    const response = await signOutByAuth(auth);
+    return response;
   } catch (e) {
     return e;
   }

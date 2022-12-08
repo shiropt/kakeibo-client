@@ -8,7 +8,6 @@ import { openConfirmModal } from "@mantine/modals";
 import { signOut } from "../../../libs/firebase/auth";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import { MoneyDiaryForm } from "../../ui/form/MoneyDiary/MoneyDiaryForm";
-import { CirclePlus } from "tabler-icons-react";
 import { moneyDiaryForm } from "../../../libs/mantine/useForm/moneyDiaryForm";
 
 type Props = {
@@ -18,8 +17,6 @@ type Props = {
 
 export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
   const { openedDrawer, setOpenedDrawer } = moneyDiaryForm();
-  // const [opened, setOpened] = useState(false);
-
   const { toggleTheme } = useContext(ThemeContext);
   const { largeScreen } = useMediaQuery();
   const router = useRouter();
@@ -50,7 +47,8 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
                   openConfirmModal({
                     title: "ログアウトします",
                     centered: true,
-                    size: 230,
+                    size: "auto",
+                    withCloseButton: false,
                     onCancel: () => {
                       return;
                     },

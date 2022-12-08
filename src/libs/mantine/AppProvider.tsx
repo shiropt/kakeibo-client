@@ -1,24 +1,16 @@
-import { Button, LoadingOverlay, MantineProvider, Text, Loader } from "@mantine/core";
+import { MantineProvider, Loader } from "@mantine/core";
 import { createContext, FC, ReactNode, useState } from "react";
 import { useToggle } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
-import { ContextModalProps, ModalsProvider } from "@mantine/modals";
+import { ModalsProvider } from "@mantine/modals";
 import { useLoadingStore } from "../store/loading";
+import { AlertModal } from "../../components/ui/modal";
 
 type ContextType = {
   colorScheme: "light" | "dark";
   toggleTheme: () => void;
 };
-const AlertModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: string }>) => (
-  <div className=" text-center">
-    <Text className=" text-center" size="sm">
-      {innerProps.modalBody}
-    </Text>
-    <Button fullWidth mt="xs" onClick={() => context.closeAll()}>
-      OK
-    </Button>
-  </div>
-);
+
 export const ThemeContext = createContext<ContextType>({ colorScheme: "dark", toggleTheme: () => {} });
 export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [colorScheme, toggleTheme] = useToggle<"dark" | "light">(["light", "dark"]);
