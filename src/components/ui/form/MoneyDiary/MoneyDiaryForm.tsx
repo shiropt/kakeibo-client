@@ -2,9 +2,9 @@ import { TextInput, NumberInput, Textarea, MultiSelect, Button, Checkbox } from 
 import { FC } from "react";
 import { DatePicker } from "@mantine/dates";
 import { moneyDiaryForm } from "../../../../libs/mantine/useForm/moneyDiaryForm";
-import { useMoneyDiaryStore } from "../../../../libs/store/moneyDiary";
 import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
 import { MoneyDiaryDto } from "../../../../../api/@types";
+import { store } from "../../../../libs/store";
 
 type Props = {
   closeDrawer?: VoidFunction;
@@ -12,7 +12,7 @@ type Props = {
 
 export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
   const { form, onSubmit } = moneyDiaryForm();
-  const { mode, setMode, resetMoneyDiary, moneyDiary } = useMoneyDiaryStore();
+  const { setMode, resetMoneyDiary, mode, moneyDiary } = store.moneyDiary();
   const { categories } = useMoneyDiary();
   const list = categories
     ? categories.map((category) => {

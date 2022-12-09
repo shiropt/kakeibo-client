@@ -1,19 +1,17 @@
 import { Container, Title, Button, Divider, Text } from "@mantine/core";
-import { BrandGoogle, Mail } from "tabler-icons-react";
 import { useRouter } from "next/router";
 import { FC, useCallback, useState } from "react";
 import { useFetchers } from "../../../../hooks/useFetcher";
-import { useUserStore } from "../../../../libs/store/user";
-import { useLoadingStore } from "../../../../libs/store/loading";
 import { emailAndPasswordSignup } from "../../../../libs/firebase/auth";
 import { AuthForm } from "../../../ui/form";
+import { store } from "../../../../libs/store";
 
 export const Signup: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { apiClient } = useFetchers();
-  const { setAccessToken } = useUserStore();
-  const { toggleIsLoading } = useLoadingStore();
+  const { setAccessToken } = store.user();
+  const { toggleIsLoading } = store.loading();
 
   const router = useRouter();
   const signup = useCallback(async (values: { email: string; password: string }) => {

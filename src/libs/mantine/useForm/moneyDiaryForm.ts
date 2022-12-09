@@ -1,18 +1,19 @@
+import { moneyDiary } from "./../../store/moneyDiary";
 import { useFetchers } from "./../../../hooks/useFetcher";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { showNotification } from "@mantine/notifications";
-import { useMoneyDiaryStore } from "../../store/moneyDiary";
 import { useEffect, useState } from "react";
 import { MoneyDiaryDto } from "../../../../api/@types";
+import { store } from "../../store";
 
 export const moneyDiaryForm = () => {
   const [openedDrawer, setOpenedDrawer] = useState(false);
 
   const { apiClient } = useFetchers();
   const { mutate } = useMoneyDiary();
-  const { moneyDiary, mode, setMode, resetMoneyDiary } = useMoneyDiaryStore();
+  const { moneyDiary, mode, setMode, resetMoneyDiary } = store.moneyDiary();
   useEffect(() => {
     form.setValues({
       memo: moneyDiary.memo,

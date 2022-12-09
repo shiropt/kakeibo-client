@@ -2,17 +2,17 @@ import { FC } from "react";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { Badge, Card, Drawer } from "@mantine/core";
 import { IconCopy, IconTrash, IconEdit, IconDots } from "@tabler/icons";
-import { useMoneyDiaryStore } from "../../../libs/store/moneyDiary";
 import { MoneyDiaryGetResponse } from "../../../../api/@types";
 import { Repeat } from "tabler-icons-react";
 import { moneyDiaryForm } from "../../../libs/mantine/useForm/moneyDiaryForm";
 import { MoneyDiaryForm } from "../form/MoneyDiary/MoneyDiaryForm";
+import { store } from "../../../libs/store";
 
 type Props = {
   moneyDiary: MoneyDiaryGetResponse;
 };
 export const MobileDetailRow: FC<Props> = ({ moneyDiary }) => {
-  const { setMoneyDiary, setMode } = useMoneyDiaryStore();
+  const { setMoneyDiary, setMode } = store.moneyDiary();
   const { minusColor, openDeleteModal } = useMoneyDiary();
   const { openedDrawer, setOpenedDrawer } = moneyDiaryForm();
 

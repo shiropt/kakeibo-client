@@ -3,8 +3,8 @@ import { createContext, FC, ReactNode, useState } from "react";
 import { useToggle } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
-import { useLoadingStore } from "../store/loading";
 import { AlertModal } from "../../components/ui/modal";
+import { store } from "../store";
 
 type ContextType = {
   colorScheme: "light" | "dark";
@@ -14,8 +14,7 @@ type ContextType = {
 export const ThemeContext = createContext<ContextType>({ colorScheme: "dark", toggleTheme: () => {} });
 export const AppMantineProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [colorScheme, toggleTheme] = useToggle<"dark" | "light">(["light", "dark"]);
-  const { isLoading } = useLoadingStore();
-
+  const { isLoading } = store.loading();
   return (
     <ThemeContext.Provider value={{ colorScheme, toggleTheme }}>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{ dir: "rtl", colorScheme }}>

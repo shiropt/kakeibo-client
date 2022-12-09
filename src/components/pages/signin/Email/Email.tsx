@@ -2,17 +2,16 @@ import { Container, Title, Anchor, Button, Divider, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { FC, useCallback, useState } from "react";
 import { useFetchers } from "../../../../hooks/useFetcher";
-import { useUserStore } from "../../../../libs/store/user";
 import { AuthForm } from "../../../ui/form";
 import Axios from "axios";
 import { emailAndPasswordSignin } from "../../../../libs/firebase/auth";
-import { useLoadingStore } from "../../../../libs/store/loading";
+import { store } from "../../../../libs/store";
 
 export const EmailSignin: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const { setAccessToken } = useUserStore();
-  const { toggleIsLoading } = useLoadingStore();
+  const { setAccessToken } = store.user();
+  const { toggleIsLoading } = store.loading();
   const { apiClient } = useFetchers();
 
   const signin = useCallback(async (values: { email: string; password: string }) => {

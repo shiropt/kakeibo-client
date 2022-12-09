@@ -1,14 +1,14 @@
 import { useFetchers } from "./useFetcher";
 import useAspidaSWR from "@aspida/swr";
-import { useSearchStore } from "../libs/store/search";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { MoneyDiaryGetResponse } from "../../api/@types";
 import { getPath } from "../utils/path";
+import { store } from "../libs/store";
 
 export const useMoneyDiary = () => {
   const { apiClient, useFetch } = useFetchers();
-  const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = useSearchStore();
+  const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = store.search();
   const { searchMoneyDiary } = getPath();
   const { data, error, mutate } = useFetch<MoneyDiaryGetResponse[]>(
     searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure })

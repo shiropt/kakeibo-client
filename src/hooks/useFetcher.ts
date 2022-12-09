@@ -1,14 +1,14 @@
 import { baseURL } from "./../utils/path";
-import { useUserStore } from "./../libs/store/user";
 import axios, { Axios } from "axios";
 import useSWR from "swr";
 import axiosClient from "@aspida/axios";
 import api from "../../api/api/$api";
 import { useRouter } from "next/router";
 import { openContextModal, closeModal } from "@mantine/modals";
+import { store } from "../libs/store";
 
 export const useFetchers = () => {
-  const { accessToken } = useUserStore();
+  const { accessToken } = store.user();
   const router = useRouter();
   const axiosConfig = { baseURL, headers: { Authorization: `Bearer ${accessToken}` } };
   const { v1: apiClient } = api(axiosClient(axios, axiosConfig));

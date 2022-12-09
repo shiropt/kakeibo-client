@@ -13,7 +13,7 @@ type State = {
   resetOrderByIncomeAndExpenditure: () => void;
 };
 
-export const useSearchStore = create<State>()(
+const useStore = create<State>()(
   devtools(
     persist((set, get) => ({
       year: new Date().getFullYear().toString(),
@@ -41,3 +41,4 @@ export const useSearchStore = create<State>()(
     }))
   )
 );
+export const search = useStore;

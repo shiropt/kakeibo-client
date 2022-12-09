@@ -3,16 +3,15 @@ import { Table } from "@mantine/core";
 import { FallbackTable } from "./FallbackTable";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { DetailRow } from "./DetailRow";
-import { useSearchStore } from "../../../libs/store/search";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import { DetailHeader } from "./DetailHeader";
 import { MobileDetailHeader } from "./MobileDetailHeader";
 import { MobileDetailRow } from "./MobileDetailRow";
+import { store } from "../../../libs/store";
 
 export const MoneyDiaryTable: FC = () => {
-  const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = useSearchStore();
+  const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = store.search();
   const { smallScreen } = useMediaQuery();
-  const style = smallScreen ? "flex float-right" : "flex float-right";
 
   const { data, error, minusColor, sumPayment, sumWithdrawal } = useMoneyDiary();
   if (error) {
@@ -25,9 +24,6 @@ export const MoneyDiaryTable: FC = () => {
   const sortByDate = () => {
     setOrderByDate();
     resetOrderByIncomeAndExpenditure();
-  };
-  const sortByIncomeAndExpenditure = () => {
-    setOrderByIncomeAndExpenditure();
   };
 
   return (

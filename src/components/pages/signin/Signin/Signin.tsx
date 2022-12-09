@@ -4,16 +4,15 @@ import { useRouter } from "next/router";
 import { FC, useCallback, useState } from "react";
 import { emailAndPasswordSignin, googleSignin } from "../../../../libs/firebase/auth";
 import { useFetchers } from "../../../../hooks/useFetcher";
-import { useUserStore } from "../../../../libs/store/user";
 import Axios from "axios";
-import { useLoadingStore } from "../../../../libs/store/loading";
 import { AuthForm } from "../../../ui/form";
+import { store } from "../../../../libs/store";
 
 export const Signin: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { apiClient } = useFetchers();
-  const { setAccessToken } = useUserStore();
-  const { toggleIsLoading } = useLoadingStore();
+  const { setAccessToken } = store.user();
+  const { toggleIsLoading } = store.loading();
   const router = useRouter();
   const signin = useCallback(async (values: { email: string; password: string }) => {
     toggleIsLoading();

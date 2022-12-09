@@ -6,7 +6,7 @@ type State = {
   toggleIsLoading: () => void;
 };
 
-export const useLoadingStore = create<State>()(
+const useStore = create<State>()(
   devtools((set, get) => ({
     isLoading: false,
     toggleIsLoading: () => {
@@ -14,3 +14,5 @@ export const useLoadingStore = create<State>()(
     },
   }))
 );
+
+export const loading = useStore;

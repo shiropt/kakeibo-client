@@ -6,7 +6,7 @@ type State = {
   setAccessToken: (accessToken: string) => void;
 };
 
-export const useUserStore = create<State>()(
+const useStore = create<State>()(
   devtools(
     persist((set) => ({
       accessToken: "",
@@ -16,3 +16,4 @@ export const useUserStore = create<State>()(
     }))
   )
 );
+export const user = useStore;

@@ -2,15 +2,15 @@ import { FC } from "react";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { Badge, Menu } from "@mantine/core";
 import { IconCopy, IconTrash, IconEdit, IconDots } from "@tabler/icons";
-import { useMoneyDiaryStore } from "../../../libs/store/moneyDiary";
 import { MoneyDiaryGetResponse } from "../../../../api/@types";
 import { Repeat } from "tabler-icons-react";
+import { store } from "../../../libs/store";
 
 type Props = {
   moneyDiary: MoneyDiaryGetResponse;
 };
 export const DetailRow: FC<Props> = ({ moneyDiary }) => {
-  const { setMoneyDiary, setMode } = useMoneyDiaryStore();
+  const { setMoneyDiary, setMode } = store.moneyDiary();
   const { minusColor, openDeleteModal } = useMoneyDiary();
 
   const onClickEdit = () => {

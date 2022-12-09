@@ -11,7 +11,7 @@ type State = {
   setMode: (mode: Mode) => void;
 };
 
-export const useMoneyDiaryStore = create<State>()(
+const useStore = create<State>()(
   devtools(
     persist((set, get) => ({
       moneyDiary: {
@@ -48,3 +48,5 @@ export const useMoneyDiaryStore = create<State>()(
     }))
   )
 );
+
+export const moneyDiary = useStore;

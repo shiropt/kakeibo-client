@@ -1,9 +1,9 @@
 import { Select } from "@mantine/core";
 import { FC } from "react";
-import { useSearchStore } from "../../../libs/store/search";
+import { store } from "../../../libs/store";
 
 export const SelectYearAndMonth: FC = () => {
-  const { month, year, setMonth, setYear } = useSearchStore();
+  const { month, year, setMonth, setYear } = store.search();
   const threeYearsAgo = new Date().getFullYear() - 3;
 
   const years = [...Array(5)].map((_, i) => {
