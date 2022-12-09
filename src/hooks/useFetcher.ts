@@ -16,18 +16,18 @@ export const useFetchers = () => {
   const fetcher = async <T>(url: string) => {
     try {
       const { data } = await axios.get<T>(url, axiosConfig);
-      openContextModal({
-        innerProps: { modalBody: "再度ログインし直してください" },
-        modal: "alert",
-        centered: true,
-        withCloseButton: false,
-        withinPortal: false,
-        title: "アクセスの有効期限が切れています",
-        onClose: () => router.push("/signin"),
-      });
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
+        openContextModal({
+          innerProps: { modalBody: "再度ログインし直してください" },
+          modal: "alert",
+          centered: true,
+          withCloseButton: false,
+          withinPortal: false,
+          title: "アクセスの有効期限が切れています",
+          onClose: () => router.push("/signin"),
+        });
       }
       throw new Error();
     }
