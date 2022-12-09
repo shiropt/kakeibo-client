@@ -1,30 +1,22 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { Table } from "@mantine/core";
 import { FallbackTable } from "./FallbackTable";
 import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
 import { DetailRow } from "./DetailRow";
-import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import { DetailHeader } from "./DetailHeader";
-import { MobileDetailHeader } from "./MobileDetailHeader";
-import { MobileDetailRow } from "./MobileDetailRow";
 import { store } from "../../../libs/store";
+import { minusColor } from "../../../utils/common";
 
 export const MoneyDiaryTable: FC = () => {
   const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = store.search();
-  const { smallScreen } = useMediaQuery();
-
-  const { data, error, minusColor, sumPayment, sumWithdrawal } = useMoneyDiary();
-  if (error) {
-    console.log({ error });
-  }
-  if (!data) return <FallbackTable isLoading={true} />;
-
-  if (data.length === 0) return <FallbackTable isLoading={false} />;
-
-  const sortByDate = () => {
+  const { data, sumPayment, sumWithdrawal, isLoading } = useMoneyDiary();
+  const sortByDate = useCallback(() => {
     setOrderByDate();
     resetOrderByIncomeAndExpenditure();
-  };
+  }, []);
+
+  if (isLoading) return <FallbackTable isLoading={true} />;
+  if (!data || data.length === 0) return <FallbackTable isLoading={false} />;
 
   return (
     <Table>
@@ -49,14 +41,9 @@ export const MoneyDiaryTable: FC = () => {
         </tr>
       </thead>
       <tbody>
-        {smallScreen ? (
-          <MobileDetailHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
-        ) : (
-          <DetailHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
-        )}
-
+        <DetailHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
         {data.map((moneyDiary) => {
-          return smallScreen ? <MobileDetailRow moneyDiary={moneyDiary} /> : <DetailRow moneyDiary={moneyDiary} />;
+          return <DetailRow key={moneyDiary.id} moneyDiary={moneyDiary} />;
         })}
       </tbody>
     </Table>

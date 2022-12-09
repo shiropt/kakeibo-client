@@ -5,42 +5,37 @@ import { showNotification } from "@mantine/notifications";
 import { MoneyDiaryGetResponse } from "../../api/@types";
 import { getPath } from "../utils/path";
 import { store } from "../libs/store";
+import { useCallback } from "react";
 
 export const useMoneyDiary = () => {
   const { apiClient, useFetch } = useFetchers();
   const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = store.search();
   const { searchMoneyDiary } = getPath();
-  const { data, error, mutate } = useFetch<MoneyDiaryGetResponse[]>(
+  const { data, error, mutate, isLoading } = useFetch<MoneyDiaryGetResponse[]>(
     searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure })
   );
-
   const { data: categories } = useAspidaSWR(apiClient.category);
 
-  const minusColor = (num: number) => {
-    return num < 0 ? "text-red-500" : "";
-  };
-  const total = (data: MoneyDiaryGetResponse[] | undefined, key: "withdrawal" | "payment") => {
-    if (!data) return 0;
-    const result = data
-      .map((moneyDiary) => moneyDiary[key])
-      .reduce((prev, current) => {
-        return prev + current;
-      }, 0);
+  const sumAmount = useCallback(
+    (data: MoneyDiaryGetResponse[] | undefined, key: "withdrawal" | "payment") => {
+      if (!data) return 0;
+      return data.map((moneyDiary) => moneyDiary[key]).reduce((prev, current) => prev + current, 0);
+    },
+    [data]
+  );
 
-    return result;
-  };
+  const sumWithdrawal = sumAmount(data, "withdrawal");
+  const sumPayment = sumAmount(data, "payment");
 
-  const sumWithdrawal = total(data, "withdrawal");
-  const sumPayment = total(data, "payment");
-
-  const deleteMoneyDiary = async (id: number, item: string) => {
+  const deleteMoneyDiary = useCallback(async (id: number, item: string) => {
     await apiClient.money_diary._id(id.toString()).$delete();
     mutate();
     showNotification({
       message: `${item}を削除しました`,
     });
-  };
-  const openDeleteModal = (item: string, id: number) => {
+  }, []);
+
+  const openDeleteModal = useCallback((item: string, id: number) => {
     openConfirmModal({
       title: `${item}を削除します`,
       centered: true,
@@ -52,7 +47,7 @@ export const useMoneyDiary = () => {
         deleteMoneyDiary(id, item);
       },
     });
-  };
+  }, []);
 
   return {
     data,
@@ -61,12 +56,11 @@ export const useMoneyDiary = () => {
     year,
     setMonth,
     setYear,
-    minusColor,
-    total,
     sumPayment,
     sumWithdrawal,
     openDeleteModal,
     categories,
     mutate,
+    isLoading,
   };
 };
