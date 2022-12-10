@@ -1,5 +1,5 @@
 import { TextInput, NumberInput, Textarea, MultiSelect, Button, Checkbox } from "@mantine/core";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { DatePicker } from "@mantine/dates";
 import { moneyDiaryForm } from "../../../../libs/mantine/useForm/moneyDiaryForm";
 import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
@@ -19,16 +19,20 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
         return { value: category.id.toString(), label: category.name };
       })
     : [];
-  const cancelEdit = () => {
+
+  const cancelEdit = useCallback(() => {
     setMode("NEW");
     resetMoneyDiary();
     closeDrawer && closeDrawer();
-  };
+  }, [mode]);
 
-  const onClickSubmit = (moneyDiary: MoneyDiaryDto) => {
-    onSubmit(moneyDiary);
-    closeDrawer && closeDrawer();
-  };
+  const onClickSubmit = useCallback(
+    (moneyDiary: MoneyDiaryDto) => {
+      onSubmit(moneyDiary);
+      closeDrawer && closeDrawer();
+    },
+    [moneyDiary]
+  );
 
   return (
     <form onSubmit={form.onSubmit(onClickSubmit)} className=" border-2 mt-4 mr-2 border-gray-100 p-4">

@@ -8,7 +8,7 @@ import { store } from "../libs/store";
 import { useCallback } from "react";
 
 export const useMoneyDiary = () => {
-  const { apiClient, useFetch } = useFetchers();
+  const { apiClient, useFetch, handlingError } = useFetchers();
   const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = store.search();
   const { searchMoneyDiary } = getPath();
   const { data, error, mutate, isLoading } = useFetch<MoneyDiaryGetResponse[]>(
@@ -28,7 +28,8 @@ export const useMoneyDiary = () => {
   const sumPayment = sumAmount(data, "payment");
 
   const deleteMoneyDiary = useCallback(async (id: number, item: string) => {
-    await apiClient.money_diary._id(id.toString()).$delete();
+    const response = await handlingError(apiClient.money_diary._id(id.toString()).$delete, "削除");
+    if (response.isError) return;
     mutate();
     showNotification({
       message: `${item}を削除しました`,

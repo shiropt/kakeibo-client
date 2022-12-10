@@ -6,6 +6,7 @@ import api from "../../api/api/$api";
 import { useRouter } from "next/router";
 import { openContextModal, closeModal } from "@mantine/modals";
 import { store } from "../libs/store";
+import { useCallback } from "react";
 
 export const useFetchers = () => {
   const { accessToken } = store.user();
@@ -55,5 +56,31 @@ export const useFetchers = () => {
     }
   };
 
-  return { useFetch, postData, deleteData, apiClient };
+  const handlingError = useCallback(async <T>(callBack: Function, action: string, body?: T) => {
+    const response = { isError: false, body: {} };
+    try {
+      const result = await callBack(body);
+      response.body = result;
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        openContextModal({
+          innerProps: { modalBody: "不正なデータです" },
+          modal: "alert",
+          centered: true,
+          withCloseButton: false,
+          withinPortal: false,
+          title: `${action}に失敗しました。`,
+          onClose: () => {
+            return;
+          },
+        });
+        response.isError = true;
+        return response;
+      }
+      throw Error("サーバーエラーが発生しました。");
+    }
+  }, []);
+
+  return { useFetch, postData, deleteData, apiClient, handlingError };
 };
