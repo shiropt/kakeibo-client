@@ -16,5 +16,9 @@ export const getPath = () => {
     const { year, month, orderByDate, orderByIncomeAndExpenditure } = params;
     return `api/v1/money-diary/search?year=${year}&month=${month}&orderByDate=${orderByDate}&orderByIncomeAndExpenditure=${orderByIncomeAndExpenditure}`;
   };
-  return { searchMoneyDiary };
+
+  const aggregate = () => {
+    return `api/v1/money-diary/aggregate`;
+  };
+  return { searchMoneyDiary, aggregate };
 };

@@ -2,7 +2,7 @@ import { useFetchers } from "./useFetcher";
 import useAspidaSWR from "@aspida/swr";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { MoneyDiaryGetResponse } from "../../api/@types";
+import { AggregateResponse, MoneyDiaryGetResponse } from "../../api/@types";
 import { getPath } from "../utils/path";
 import { store } from "../libs/store";
 import { useCallback } from "react";
@@ -10,10 +10,12 @@ import { useCallback } from "react";
 export const useMoneyDiary = () => {
   const { apiClient, useFetch, handlingError } = useFetchers();
   const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = store.search();
-  const { searchMoneyDiary } = getPath();
+  const { searchMoneyDiary, aggregate } = getPath();
   const { data, error, mutate, isLoading } = useFetch<MoneyDiaryGetResponse[]>(
     searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure })
   );
+  const { data: aggregates } = useFetch<AggregateResponse>(aggregate());
+
   const { data: categories } = useAspidaSWR(apiClient.category);
 
   const sumAmount = useCallback(
@@ -63,5 +65,6 @@ export const useMoneyDiary = () => {
     categories,
     mutate,
     isLoading,
+    aggregates,
   };
 };
