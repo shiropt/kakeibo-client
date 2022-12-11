@@ -1,13 +1,13 @@
 import { IconArrowsSort } from "@tabler/icons";
 import { FC } from "react";
-import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { useMediaQuery } from "../../../../hooks/useMediaQuery";
 
 type Props = {
   sortByDate: VoidFunction;
   sortByIncomeAndExpenditure: VoidFunction;
 };
 
-export const DetailHeader: FC<Props> = ({ sortByDate, sortByIncomeAndExpenditure }) => {
+export const ListHeader: FC<Props> = ({ sortByDate, sortByIncomeAndExpenditure }) => {
   const { smallScreen } = useMediaQuery();
 
   const detailHeader = (

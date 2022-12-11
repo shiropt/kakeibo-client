@@ -1,12 +1,11 @@
 import { Skeleton, Table } from "@mantine/core";
-import { IconArrowsSort } from "@tabler/icons";
 import { FC } from "react";
 
 type Props = {
   isLoading: boolean;
 };
 
-export const FallbackTable: FC<Props> = ({ isLoading }) => {
+export const FallbackList: FC<Props> = ({ isLoading }) => {
   return (
     <Table>
       <thead className="bg-gray-800 h-14">

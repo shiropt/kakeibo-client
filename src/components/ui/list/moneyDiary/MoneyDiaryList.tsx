@@ -1,22 +1,24 @@
 import { FC, useCallback } from "react";
 import { Table } from "@mantine/core";
-import { FallbackTable } from "./FallbackTable";
-import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
+import { FallbackList } from "./FallbackList";
 import { DetailRow } from "./DetailRow";
-import { DetailHeader } from "./DetailHeader";
-import { store } from "../../../libs/store";
-import { minusColor } from "../../../utils/common";
+import { ListHeader } from "./ListHeader";
+import { store } from "../../../../libs/store";
+import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
+import { minusColor } from "../../../../utils/common";
 
-export const MoneyDiaryTable: FC = () => {
+export const MoneyDiaryList: FC = () => {
   const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = store.search();
-  const { data, sumPayment, sumWithdrawal, isLoading } = useMoneyDiary();
+  const { data, sumPayment, sumWithdrawal, isLoading, aggregates } = useMoneyDiary();
   const sortByDate = useCallback(() => {
     setOrderByDate();
     resetOrderByIncomeAndExpenditure();
   }, []);
 
-  if (isLoading) return <FallbackTable isLoading={true} />;
-  if (!data || data.length === 0) return <FallbackTable isLoading={false} />;
+  console.log({ aggregates });
+
+  if (isLoading) return <FallbackList isLoading={true} />;
+  if (!data || data.length === 0) return <FallbackList isLoading={false} />;
 
   return (
     <Table>
@@ -41,7 +43,7 @@ export const MoneyDiaryTable: FC = () => {
         </tr>
       </thead>
       <tbody>
-        <DetailHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
+        <ListHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
         {data.map((moneyDiary) => {
           return <DetailRow key={moneyDiary.id} moneyDiary={moneyDiary} />;
         })}
