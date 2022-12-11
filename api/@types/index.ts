@@ -13,18 +13,42 @@ export type UserCreateDto = {
   email: string;
 };
 
+export type Category = {
+  id: number;
+  name: string;
+};
+
 export type MoneyDiaryGetResponse = {
   id: number;
   memo: string;
   withdrawal: number;
   payment: number;
   incomeAndExpenditure: number;
-  date: Date;
+  date: string;
   automaticRegistration: boolean;
   expenseItemName: string;
-  categories: { id: number; name: string }[];
+  categories: Category[];
   createdAt: string;
   updatedAt: string;
+};
+
+export type Comprehensive = {
+  withdrawal: number;
+  payment: number;
+  incomeAndExpenditure: number;
+};
+
+export type Aggregate = {
+  date: string;
+  withdrawal: number;
+  payment: number;
+  incomeAndExpenditure: number;
+};
+
+export type AggregateResponse = {
+  comprehensive: Comprehensive;
+  aggregateByYear: Aggregate;
+  aggregateByMonth: Aggregate;
 };
 
 export type MoneyDiaryDto = {
@@ -34,14 +58,22 @@ export type MoneyDiaryDto = {
   date: Date;
   automaticRegistration: boolean;
   expenseItemName: string;
-  categories: (string | number)[];
+  categories: string[];
+};
+
+export type MoneyDiary = {
+  id: number;
+  memo: string | null;
+  withdrawal: number;
+  payment: number;
+  date: string;
+  automaticRegistration: boolean;
+  userId: number;
+  expenseItemName: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type CreateCategoryDto = {};
-
-export type Category = {
-  id: number;
-  name: string;
-};
 
 export type UpdateCategoryDto = {};

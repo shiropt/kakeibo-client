@@ -37,6 +37,10 @@ paths:
       responses:
         "201":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: object
   /api/v1/money-diary:
     get:
       operationId: MoneyDiaryController_getMoneyDiary
@@ -67,6 +71,10 @@ paths:
       responses:
         "201":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MoneyDiary"
   /api/v1/money-diary/search:
     get:
       operationId: MoneyDiaryController_getMoneyDiaryByYear
@@ -123,6 +131,17 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/MoneyDiaryGetResponse"
+  /api/v1/money-diary/aggregate:
+    get:
+      operationId: MoneyDiaryController_getAggregateMoneyDiaries
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AggregateResponse"
   /api/v1/money-diary/{id}:
     put:
       operationId: MoneyDiaryController_updateMoneyDiary
@@ -141,6 +160,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MoneyDiary"
     delete:
       operationId: MoneyDiaryController_deleteMoneyDiary
       parameters:
@@ -152,6 +175,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: object
   /api/v1/category:
     post:
       operationId: CategoryController_create
@@ -165,6 +192,10 @@ paths:
       responses:
         "201":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: string
     get:
       operationId: CategoryController_findAll
       parameters: []
@@ -189,6 +220,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: string
     patch:
       operationId: CategoryController_update
       parameters:
@@ -206,6 +241,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: string
     delete:
       operationId: CategoryController_remove
       parameters:
@@ -217,6 +256,10 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                type: string
 info:
   title: kakeibo-api
   description: ""
@@ -255,6 +298,16 @@ components:
       required:
         - uid
         - email
+    Category:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - id
+        - name
     MoneyDiaryGetResponse:
       type: object
       properties:
@@ -278,7 +331,7 @@ components:
         categories:
           type: array
           items:
-            type: string
+            $ref: "#/components/schemas/Category"
         createdAt:
           format: date-time
           type: string
@@ -297,6 +350,48 @@ components:
         - categories
         - createdAt
         - updatedAt
+    Comprehensive:
+      type: object
+      properties:
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        incomeAndExpenditure:
+          type: number
+      required:
+        - withdrawal
+        - payment
+        - incomeAndExpenditure
+    Aggregate:
+      type: object
+      properties:
+        date:
+          type: string
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        incomeAndExpenditure:
+          type: number
+      required:
+        - date
+        - withdrawal
+        - payment
+        - incomeAndExpenditure
+    AggregateResponse:
+      type: object
+      properties:
+        comprehensive:
+          $ref: "#/components/schemas/Comprehensive"
+        aggregateByYear:
+          $ref: "#/components/schemas/Aggregate"
+        aggregateByMonth:
+          $ref: "#/components/schemas/Aggregate"
+      required:
+        - comprehensive
+        - aggregateByYear
+        - aggregateByMonth
     MoneyDiaryDto:
       type: object
       properties:
@@ -325,19 +420,47 @@ components:
         - automaticRegistration
         - expenseItemName
         - categories
-    CreateCategoryDto:
-      type: object
-      properties: {}
-    Category:
+    MoneyDiary:
       type: object
       properties:
         id:
           type: number
-        name:
+        memo:
+          type: string
+          nullable: true
+        withdrawal:
+          type: number
+        payment:
+          type: number
+        date:
+          format: date-time
+          type: string
+        automaticRegistration:
+          type: boolean
+        userId:
+          type: number
+        expenseItemName:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
           type: string
       required:
         - id
-        - name
+        - memo
+        - withdrawal
+        - payment
+        - date
+        - automaticRegistration
+        - userId
+        - expenseItemName
+        - createdAt
+        - updatedAt
+    CreateCategoryDto:
+      type: object
+      properties: {}
     UpdateCategoryDto:
       type: object
       properties: {}

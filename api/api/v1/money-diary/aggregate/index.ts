@@ -2,13 +2,8 @@
 import type * as Types from '../../../../@types'
 
 export type Methods = {
-  put: {
+  get: {
     status: 200
-    resBody: Types.MoneyDiary
-    reqBody: Types.MoneyDiaryDto
-  }
-
-  delete: {
-    status: 200
+    resBody: Types.AggregateResponse
   }
 }

@@ -13,6 +13,7 @@ export type Methods = {
 
   post: {
     status: 201
+    resBody: Types.MoneyDiary
     reqBody: Types.MoneyDiaryDto
   }
 }

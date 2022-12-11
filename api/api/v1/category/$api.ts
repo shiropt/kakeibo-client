@@ -16,24 +16,24 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
 
       return {
         get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<void, BasicHeaders, Methods1['get']['status']>(prefix, prefix0, GET, option).send(),
+          fetch<Methods1['get']['resBody'], BasicHeaders, Methods1['get']['status']>(prefix, prefix0, GET, option).text(),
         $get: (option?: { config?: T | undefined } | undefined) =>
-          fetch<void, BasicHeaders, Methods1['get']['status']>(prefix, prefix0, GET, option).send().then(r => r.body),
+          fetch<Methods1['get']['resBody'], BasicHeaders, Methods1['get']['status']>(prefix, prefix0, GET, option).text().then(r => r.body),
         patch: (option: { body: Methods1['patch']['reqBody'], config?: T | undefined }) =>
-          fetch<void, BasicHeaders, Methods1['patch']['status']>(prefix, prefix0, PATCH, option).send(),
+          fetch<Methods1['patch']['resBody'], BasicHeaders, Methods1['patch']['status']>(prefix, prefix0, PATCH, option).text(),
         $patch: (option: { body: Methods1['patch']['reqBody'], config?: T | undefined }) =>
-          fetch<void, BasicHeaders, Methods1['patch']['status']>(prefix, prefix0, PATCH, option).send().then(r => r.body),
+          fetch<Methods1['patch']['resBody'], BasicHeaders, Methods1['patch']['status']>(prefix, prefix0, PATCH, option).text().then(r => r.body),
         delete: (option?: { config?: T | undefined } | undefined) =>
-          fetch<void, BasicHeaders, Methods1['delete']['status']>(prefix, prefix0, DELETE, option).send(),
+          fetch<Methods1['delete']['resBody'], BasicHeaders, Methods1['delete']['status']>(prefix, prefix0, DELETE, option).text(),
         $delete: (option?: { config?: T | undefined } | undefined) =>
-          fetch<void, BasicHeaders, Methods1['delete']['status']>(prefix, prefix0, DELETE, option).send().then(r => r.body),
+          fetch<Methods1['delete']['resBody'], BasicHeaders, Methods1['delete']['status']>(prefix, prefix0, DELETE, option).text().then(r => r.body),
         $path: () => `${prefix}${prefix0}`
       }
     },
     post: (option: { body: Methods0['post']['reqBody'], config?: T | undefined }) =>
-      fetch<void, BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).send(),
+      fetch<Methods0['post']['resBody'], BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).text(),
     $post: (option: { body: Methods0['post']['reqBody'], config?: T | undefined }) =>
-      fetch<void, BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).send().then(r => r.body),
+      fetch<Methods0['post']['resBody'], BasicHeaders, Methods0['post']['status']>(prefix, PATH0, POST, option).text().then(r => r.body),
     get: (option?: { config?: T | undefined } | undefined) =>
       fetch<Methods0['get']['resBody'], BasicHeaders, Methods0['get']['status']>(prefix, PATH0, GET, option).json(),
     $get: (option?: { config?: T | undefined } | undefined) =>
