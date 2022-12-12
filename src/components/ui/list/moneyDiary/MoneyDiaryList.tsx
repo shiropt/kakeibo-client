@@ -8,20 +8,20 @@ import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
 
 export const MoneyDiaryList: FC = () => {
   const { setOrderByDate, setOrderByIncomeAndExpenditure, resetOrderByIncomeAndExpenditure } = store.search();
-  const { data, sumPayment, sumWithdrawal, isLoading, aggregates } = useMoneyDiary();
+  const { moneyDiaries, sumPayment, sumWithdrawal, isLoading, aggregates } = useMoneyDiary();
   const sortByDate = useCallback(() => {
     setOrderByDate();
     resetOrderByIncomeAndExpenditure();
   }, []);
 
   if (isLoading) return <FallbackList isLoading={true} />;
-  if (!data || data.length === 0) return <FallbackList isLoading={false} />;
+  if (!moneyDiaries || moneyDiaries.length === 0) return <FallbackList isLoading={false} />;
 
   return (
     <Table className=" bg-white">
       <tbody>
         <ListHeader sortByDate={sortByDate} sortByIncomeAndExpenditure={setOrderByIncomeAndExpenditure} />
-        {data.map((moneyDiary) => {
+        {moneyDiaries.map((moneyDiary) => {
           return <DetailRow key={moneyDiary.id} moneyDiary={moneyDiary} />;
         })}
       </tbody>

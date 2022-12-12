@@ -11,9 +11,12 @@ export const useMoneyDiary = () => {
   const { apiClient, useFetch, handlingError } = useFetchers();
   const { month, year, orderByDate, setMonth, setYear, orderByIncomeAndExpenditure } = store.search();
   const { searchMoneyDiary, aggregate } = getPath();
-  const { data, error, mutate, isLoading } = useFetch<MoneyDiaryGetResponse[]>(
-    searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure })
-  );
+  const {
+    data: moneyDiaries,
+    error,
+    mutate,
+    isLoading,
+  } = useFetch<MoneyDiaryGetResponse[]>(searchMoneyDiary({ year, month, orderByDate, orderByIncomeAndExpenditure }));
   const { data: aggregates } = useFetch<AggregateResponse>(aggregate());
 
   const { data: categories } = useAspidaSWR(apiClient.category);
@@ -23,11 +26,11 @@ export const useMoneyDiary = () => {
       if (!data) return 0;
       return data.map((moneyDiary) => moneyDiary[key]).reduce((prev, current) => prev + current, 0);
     },
-    [data]
+    [moneyDiaries]
   );
 
-  const sumWithdrawal = sumAmount(data, "withdrawal");
-  const sumPayment = sumAmount(data, "payment");
+  const sumWithdrawal = sumAmount(moneyDiaries, "withdrawal");
+  const sumPayment = sumAmount(moneyDiaries, "payment");
 
   const deleteMoneyDiary = useCallback(async (id: number, item: string) => {
     const response = await handlingError(apiClient.money_diary._id(id.toString()).$delete, "削除");
@@ -53,7 +56,7 @@ export const useMoneyDiary = () => {
   }, []);
 
   return {
-    data,
+    moneyDiaries,
     error,
     month,
     year,
