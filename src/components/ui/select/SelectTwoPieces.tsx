@@ -17,7 +17,7 @@ export const SelectYearAndMonth: FC = () => {
   });
 
   return (
-    <div className=" flex">
+    <div className=" pb-4 flex">
       <Select
         className="w-24 mr-2"
         placeholder="表示する年を選択してください"

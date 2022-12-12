@@ -8,11 +8,6 @@ type Props = {
 export const FallbackList: FC<Props> = ({ isLoading }) => {
   return (
     <Table>
-      <thead className="bg-gray-800 h-14">
-        <tr>
-          <th className=" text-white" colSpan={6}></th>
-        </tr>
-      </thead>
       <tbody>
         <tr className="bg-gray-100">
           <td className=" w-24">日付</td>
