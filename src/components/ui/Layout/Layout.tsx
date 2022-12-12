@@ -70,7 +70,9 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
           </Drawer>
         </Menu>
       </Header>
-      <main className="min-h-screen pt-16">{children}</main>
+      <main className="min-h-screen pt-16">
+        <div className=" px-40 pt-10">{children}</div>
+      </main>
     </div>
   );
 };
