@@ -5,6 +5,7 @@ import { SelectYearAndMonth } from "../../ui/select/SelectTwoPieces";
 import { MoneyDiaryList } from "../../ui/list/moneyDiary/MoneyDiaryList";
 import { WithTitlePanel } from "../../ui/panel/WithTitlePanel";
 import { TablePanel } from "../../ui/panel/TablePanel";
+import { ChartPanel } from "../../ui/panel/ChartPanel";
 
 export const Home: FC = () => {
   return (
@@ -13,9 +14,7 @@ export const Home: FC = () => {
         <div className="flex justify-between mb-8">
           <div className="flex flex-col justify-between w-2/4">
             <TablePanel />
-            <WithTitlePanel title="当月収支推移">
-              <div className=" h-48">グラフ</div>
-            </WithTitlePanel>
+            <ChartPanel />
           </div>
 
           <div className=" w-2/4">
