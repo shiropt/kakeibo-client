@@ -8,8 +8,6 @@ export const ChartPanel: FC = () => {
   const { moneyDiaries } = useMoneyDiary();
 
   if (!moneyDiaries) return <WithTitlePanel title="支出推移">{null}</WithTitlePanel>;
-  const totalWithdrawal = moneyDiaries.reduce((prev, current) => prev + current.withdrawal, 0);
-  const totalPayment = moneyDiaries.reduce((prev, current) => prev + current.payment, 0);
 
   const data = moneyDiaries
     .filter((moneyDiary) => moneyDiary.payment > 0)
@@ -24,12 +22,12 @@ export const ChartPanel: FC = () => {
 
   return (
     <WithTitlePanel title="出費内訳">
-      <PieChart width={800} height={615}>
+      <PieChart width={700} height={190}>
         <Pie
           data={data}
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={180}
+          outerRadius={60}
           fill="#8884d8"
           nameKey="name"
           dataKey="value"

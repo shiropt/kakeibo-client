@@ -33,24 +33,19 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
     },
     [moneyDiary]
   );
+  const cate = "payment";
 
   return (
-    <form onSubmit={form.onSubmit(onClickSubmit)}>
-      <div className="flex">
-        <p className=" mt-1 mr-2 w-20">費目名</p>
-        <TextInput {...form.getInputProps("expenseItemName")} className=" mb-4 w-80" placeholder="費目名を入力" />
-      </div>
-      <div className="flex">
-        <p className=" mt-1 mr-2 w-20">出金額</p>
-        <NumberInput
-          {...form.getInputProps("payment")}
-          hideControls
-          className="mr-2 mb-4  w-80"
-          placeholder={`出金額を入力`}
-          maxLength={9}
-        />
-      </div>
-      <div className="flex">
+    <form className="flex flex-col justify-center" onSubmit={form.onSubmit(onClickSubmit)}>
+      <TextInput {...form.getInputProps("expenseItemName")} className=" mb-4 w-80" placeholder="費目名を入力" />
+      <NumberInput
+        {...form.getInputProps(cate)}
+        hideControls
+        className="mr-2 mb-4  w-80"
+        placeholder={`出金額を入力`}
+        maxLength={9}
+      />
+      {/* <div className="flex">
         <p className=" mt-1 mr-2 w-20">入金額</p>
         <NumberInput
           {...form.getInputProps("withdrawal")}
@@ -59,9 +54,8 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
           placeholder={`入金額を入力`}
           maxLength={9}
         />
-      </div>
-
-      <div className="flex">
+      </div> */}
+      {/* <div className="flex">
         <p className="mt-1 mr-2 w-20">日付</p>
         <DatePicker
           inputFormat="YYYY/MM/DD"
@@ -69,23 +63,17 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
           className=" mb-4  w-80"
           placeholder="日付を選択"
         />
-      </div>
-      <div className=" flex">
-        <p className=" mt-1 mr-2 w-20">カテゴリ</p>
-        <MultiSelect
-          dropdownPosition="top"
-          data={list}
-          className=" mb-4  w-80"
-          placeholder="カテゴリを入力"
-          searchable
-          nothingFound="カテゴリが見つかりません"
-          {...form.getInputProps("categories")}
-        />
-      </div>
-      <div className=" flex">
-        <p className=" mt-1 mr-2 w-20">メモ</p>
-        <Textarea {...form.getInputProps("memo")} placeholder="メモを入力" className=" mb-4  w-80" />
-      </div>
+      </div> */}
+      <MultiSelect
+        dropdownPosition="top"
+        data={list}
+        className=" mb-4  w-80"
+        placeholder="カテゴリを入力"
+        searchable
+        nothingFound="カテゴリが見つかりません"
+        {...form.getInputProps("categories")}
+      />
+      <Textarea {...form.getInputProps("memo")} placeholder="メモを入力" className=" mb-4  w-80" />
       <Checkbox
         {...form.getInputProps("automaticRegistration")}
         size="md"
@@ -94,7 +82,7 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
         label="毎月登録する(1日に自動で登録されます)"
       />
       <div>
-        <Button type="submit" fullWidth size="md" color="red">
+        <Button fullWidth type="submit" size="md" color="red">
           {mode === "EDIT" ? `編集完了` : "登録"}
         </Button>
         {mode !== "NEW" && (

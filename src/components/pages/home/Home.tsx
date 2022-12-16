@@ -13,14 +13,14 @@ export const Home: FC = () => {
       <div className="">
         <div className="flex justify-between mb-8">
           <div className="flex flex-col justify-between w-2/4">
+            <TablePanel />
             <ChartPanel />
           </div>
 
-          <div className=" w-2/4">
+          <div className="">
             <WithTitlePanel title="入力">
               <MoneyDiaryForm />
             </WithTitlePanel>
-            <TablePanel />
           </div>
         </div>
         <WithTitlePanel title="収支一覧">
