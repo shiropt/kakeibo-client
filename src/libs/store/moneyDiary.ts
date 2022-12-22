@@ -17,8 +17,8 @@ const useStore = create<State>()(
       moneyDiary: {
         id: 0,
         memo: "",
-        withdrawal: 0,
-        payment: 0,
+        withdrawal: "",
+        payment: "",
         date: new Date(),
         automaticRegistration: false,
         expenseItemName: "",
@@ -33,8 +33,8 @@ const useStore = create<State>()(
           moneyDiary: {
             id: 0,
             memo: "",
-            withdrawal: 0,
-            payment: 0,
+            withdrawal: "",
+            payment: "",
             date: new Date(),
             automaticRegistration: false,
             expenseItemName: "",

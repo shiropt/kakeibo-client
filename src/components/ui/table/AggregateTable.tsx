@@ -9,7 +9,7 @@ export const AggregateTable: FC<Props> = ({ rows }) => {
   const body = rows.map((row) => (
     <tr className="" key={row.title}>
       <td className=" w-80 bg-gray-300">{row.title}</td>
-      <td className=" bg-white text-right">
+      <td className=" w-80 bg-white text-right">
         <span className={minusColor(row.price)}>{row.price.toLocaleString()} </span>円
       </td>
     </tr>

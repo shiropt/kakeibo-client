@@ -53,12 +53,12 @@ export type AggregateResponse = {
 
 export type MoneyDiaryDto = {
   memo: string;
-  withdrawal: number;
-  payment: number;
+  withdrawal: number | string;
+  payment: number | string;
   date: Date;
   automaticRegistration: boolean;
   expenseItemName: string;
-  categories: string[];
+  categories: number[];
 };
 
 export type MoneyDiary = {

@@ -29,7 +29,7 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
       date: new Date(moneyDiary.date),
       automaticRegistration: moneyDiary.automaticRegistration,
       expenseItemName: moneyDiary.expenseItemName,
-      categories: moneyDiary.categories.map((category) => category.id).map(String),
+      categories: moneyDiary.categories.map((category) => category.id).map(Number),
     });
   }, [moneyDiary]);
 
@@ -43,7 +43,7 @@ export const DetailRow: FC<Props> = ({ moneyDiary }) => {
       date: new Date(moneyDiary.date),
       automaticRegistration: moneyDiary.automaticRegistration,
       expenseItemName: moneyDiary.expenseItemName,
-      categories: moneyDiary.categories.map((category) => category.id).map(String),
+      categories: moneyDiary.categories.map((category) => category.id).map(Number),
     });
   }, [moneyDiary]);
 

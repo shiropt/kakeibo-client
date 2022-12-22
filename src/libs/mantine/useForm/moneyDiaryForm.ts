@@ -13,22 +13,19 @@ export const moneyDiaryForm = () => {
   const { mutate } = useMoneyDiary();
   const { moneyDiary, mode, setMode, resetMoneyDiary } = store.moneyDiary();
 
-  const schema = z.object({
-    memo: z.string().max(255),
-    withdrawal: z.number().nullable(),
-    payment: z.number().nullable(),
-    date: z.date(),
-    automaticRegistration: z.boolean(),
-    expenseItemName: z
-      .string()
-      .min(1, { message: "費目名は必須です" })
-      .max(255, { message: "費目名の最大入力文字数は255文字です" }),
-    categories: z.array(z.string()),
-  });
-
   const form = useForm<MoneyDiaryDto>({
-    schema: zodResolver(schema),
-    initialValues: moneyDiary,
+    initialValues: { ...moneyDiary, payment: "", withdrawal: "" },
+    transformValues: (values) => ({
+      ...values,
+      payment: values.payment === "" ? 0 : Number(values.payment),
+      withdrawal: values.withdrawal === "" ? 0 : Number(values.withdrawal),
+    }),
+    validate: ({ expenseItemName, payment, withdrawal, date }) => ({
+      expenseItemName: !expenseItemName ? "必須項目です" : null,
+      payment: payment !== "" && isNaN(Number(payment)) ? "数値を入力してください" : null,
+      withdrawal: withdrawal !== "" && isNaN(Number(withdrawal)) ? "数値を入力してください" : null,
+      date: !date ? "必須項目です" : null,
+    }),
   });
 
   useEffect(() => {

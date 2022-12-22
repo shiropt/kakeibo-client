@@ -11,13 +11,12 @@ export const Home: FC = () => {
   return (
     <Layout>
       <div className="">
-        <div className="flex justify-between mb-8">
-          <div className="flex flex-col justify-between w-2/4">
+        <div className="flex">
+          <div>
             <TablePanel />
             <ChartPanel />
           </div>
-
-          <div className="">
+          <div className=" w-full">
             <WithTitlePanel title="入力">
               <MoneyDiaryForm />
             </WithTitlePanel>
