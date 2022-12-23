@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { WithTitlePanel } from "../../ui/panel/WithTitlePanel";
-import { AggregateTable } from "../../ui/table/AggregateTable";
-import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
+import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
+import { AggregateTable } from "../../table/AggregateTable";
+import { WithTitlePanel } from "../WithTitlePanel";
 
 export const TablePanel: FC = () => {
   const { moneyDiaries } = useMoneyDiary();

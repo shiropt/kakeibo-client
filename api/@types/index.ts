@@ -47,8 +47,8 @@ export type Aggregate = {
 
 export type AggregateResponse = {
   comprehensive: Comprehensive;
-  aggregateByYear: Aggregate;
-  aggregateByMonth: Aggregate;
+  aggregateByYear: Aggregate[];
+  aggregateByMonth: Aggregate[];
 };
 
 export type MoneyDiaryDto = {

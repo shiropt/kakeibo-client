@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { WithTitlePanel } from "./WithTitlePanel";
-import { AggregateTable } from "../table/AggregateTable";
-import { useMoneyDiary } from "../../../hooks/useMoneyDiary";
+import { WithTitlePanel } from "../WithTitlePanel";
+import { AggregateTable } from "../../table/AggregateTable";
+import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export const ChartPanel: FC = () => {
