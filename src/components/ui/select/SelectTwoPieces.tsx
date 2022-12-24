@@ -1,8 +1,12 @@
-import { Select } from "@mantine/core";
+import { Box, Select, Text } from "@mantine/core";
 import { FC } from "react";
 import { store } from "../../../libs/store";
 
-export const SelectYearAndMonth: FC = () => {
+type Props = {
+  isShowMonth?: boolean;
+};
+
+export const SelectYearAndMonth: FC<Props> = ({ isShowMonth = true }) => {
   const { month, year, setMonth, setYear } = store.search();
   const threeYearsAgo = new Date().getFullYear() - 3;
 
@@ -17,7 +21,10 @@ export const SelectYearAndMonth: FC = () => {
   });
 
   return (
-    <div className=" pb-4 flex">
+    <Box className=" pb-4 flex">
+      <Text mr="md" mt={6}>
+        期間
+      </Text>
       <Select
         className="w-24 mr-2"
         placeholder="表示する年を選択してください"
@@ -25,13 +32,15 @@ export const SelectYearAndMonth: FC = () => {
         onChange={setYear}
         data={years}
       />
-      <Select
-        className="w-24"
-        placeholder="表示する月を選択してください"
-        value={month}
-        onChange={setMonth}
-        data={months}
-      />
-    </div>
+      {isShowMonth && (
+        <Select
+          className="w-24"
+          placeholder="表示する月を選択してください"
+          value={month}
+          onChange={setMonth}
+          data={months}
+        />
+      )}
+    </Box>
   );
 };

@@ -11,6 +11,9 @@ export const Home: FC = () => {
   return (
     <Layout>
       <div className="">
+        <div className="flex justify-end mr-12">
+          <SelectYearAndMonth />
+        </div>
         <div className="flex">
           <div>
             <TablePanel />
@@ -23,9 +26,6 @@ export const Home: FC = () => {
           </div>
         </div>
         <WithTitlePanel title="収支一覧">
-          <div className="flex justify-end">
-            <SelectYearAndMonth />
-          </div>
           <MoneyDiaryList />
         </WithTitlePanel>
       </div>

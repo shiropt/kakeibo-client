@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
+import { store } from "../../../../libs/store";
 import { AggregateTable } from "../../table/AggregateTable";
 import { WithTitlePanel } from "../WithTitlePanel";
 
 export const TablePanel: FC = () => {
+  const { year } = store.search();
   const { aggregates } = useMoneyDiary();
 
   if (!aggregates)
@@ -19,7 +21,7 @@ export const TablePanel: FC = () => {
       </WithTitlePanel>
     );
 
-  const result = aggregates.aggregateByYear.find((aggregate) => aggregate.date === "2022");
+  const result = aggregates.aggregateByYear.find((aggregate) => aggregate.date === year);
 
   const data = [
     { title: "総収入", price: result ? result.withdrawal : 0 },
