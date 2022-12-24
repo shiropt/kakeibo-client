@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { FC, ReactNode, useCallback, useContext, useState } from "react";
-import { Drawer, Menu, Text, Header } from "@mantine/core";
+import { Drawer, Menu, Text, Header, Tabs } from "@mantine/core";
 import { ThemeContext } from "../../../libs/mantine/AppProvider";
 import { IconDots } from "@tabler/icons";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import { signOut } from "../../../libs/firebase/auth";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import { MoneyDiaryForm } from "../../ui/form/MoneyDiary/MoneyDiaryForm";
 import { moneyDiaryForm } from "../../../libs/mantine/useForm/moneyDiaryForm";
+import { IconBusinessplan, IconSettings, IconChartBar, IconChartPie2 } from "@tabler/icons";
 
 type Props = {
   children: ReactNode;
@@ -30,8 +31,8 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <Header className=" fixed w-screen" height={60} p="xs">
-        <Menu closeOnItemClick={false} shadow="md" width={200} trigger="hover" openDelay={100} closeDelay={400}>
+      <header className=" fixed w-screen">
+        {/* <Menu closeOnItemClick={false} shadow="md" width={200} trigger="hover" openDelay={100} closeDelay={400}>
           <Menu.Target>
             <p className="mr-2 mt-2 cursor-pointer float-right">
               <IconDots size={24} />
@@ -68,9 +69,42 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
           <Drawer position="right" opened={openedDrawer} onClose={() => setOpenedDrawer(false)} padding="md" size="xl">
             <MoneyDiaryForm />
           </Drawer>
-        </Menu>
-      </Header>
+        </Menu> */}
+        <Text
+          onClick={() =>
+            openConfirmModal({
+              title: "ログアウトします",
+              centered: true,
+              size: "auto",
+              withCloseButton: false,
+              onCancel: () => {
+                return;
+              },
+              onConfirm,
+            })
+          }
+          className=" float-right p-4 mr-48 cursor-pointer  hover:opacity-60"
+        >
+          ログアウト
+        </Text>
+      </header>
       <main className="min-h-screen pt-16">
+        <Tabs value={router.query.activeTab as string} onTabChange={(value) => router.push(`${value}`)}>
+          <Tabs.List pl={190}>
+            <Tabs.Tab px="xl" value="year" icon={<IconChartBar size={20} />}>
+              年間収支
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="/" icon={<IconChartPie2 size={20} />}>
+              月間収支
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="assets" icon={<IconBusinessplan size={20} />}>
+              資産
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="setting" icon={<IconSettings size={20} />}>
+              設定
+            </Tabs.Tab>
+          </Tabs.List>
+        </Tabs>
         <div className=" px-40 pt-10">{children}</div>
       </main>
     </div>
