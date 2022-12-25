@@ -21,7 +21,7 @@ export const SelectYearAndMonth: FC<Props> = ({ isShowMonth = true }) => {
   });
 
   return (
-    <Box className=" pb-4 flex">
+    <Box className=" flex">
       <Text mr="md" mt={6}>
         期間
       </Text>

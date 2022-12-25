@@ -44,7 +44,7 @@ export const MoneyDiaryForm: FC<Props> = ({ closeDrawer }) => {
   };
 
   return (
-    <form className="flex h-96 flex-col justify-center ml-6 mr-6" onSubmit={form.onSubmit(onClickSubmit)}>
+    <form className="flex  flex-col justify-center ml-6 mr-6" onSubmit={form.onSubmit(onClickSubmit)}>
       <div className="flex">
         <TextInput {...form.getInputProps("expenseItemName")} className=" mb-4 w-80" placeholder="費目名を入力" />
         <DatePicker

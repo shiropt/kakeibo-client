@@ -31,7 +31,7 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <header className=" fixed w-screen">
+      <header className="fixed flex border-b-2 justify-between w-screen">
         {/* <Menu closeOnItemClick={false} shadow="md" width={200} trigger="hover" openDelay={100} closeDelay={400}>
           <Menu.Target>
             <p className="mr-2 mt-2 cursor-pointer float-right">
@@ -70,6 +70,30 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
             <MoneyDiaryForm />
           </Drawer>
         </Menu> */}
+
+        <Tabs
+          color="red"
+          variant="pills"
+          radius="xs"
+          pt={8}
+          value={router.query.activeTab as string}
+          onTabChange={(value) => router.push(`${value}`)}
+        >
+          <Tabs.List pl={190}>
+            <Tabs.Tab px="xl" value="year" icon={<IconChartBar size={20} />}>
+              年間収支
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="/" icon={<IconChartPie2 size={20} />}>
+              月間収支
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="assets" icon={<IconBusinessplan size={20} />}>
+              資産
+            </Tabs.Tab>
+            <Tabs.Tab px="xl" value="setting" icon={<IconSettings size={20} />}>
+              設定
+            </Tabs.Tab>
+          </Tabs.List>
+        </Tabs>
         <Text
           onClick={() =>
             openConfirmModal({
@@ -89,23 +113,7 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
         </Text>
       </header>
       <main className="min-h-screen pt-16">
-        <Tabs value={router.query.activeTab as string} onTabChange={(value) => router.push(`${value}`)}>
-          <Tabs.List pl={190}>
-            <Tabs.Tab px="xl" value="year" icon={<IconChartBar size={20} />}>
-              年間収支
-            </Tabs.Tab>
-            <Tabs.Tab px="xl" value="/" icon={<IconChartPie2 size={20} />}>
-              月間収支
-            </Tabs.Tab>
-            <Tabs.Tab px="xl" value="assets" icon={<IconBusinessplan size={20} />}>
-              資産
-            </Tabs.Tab>
-            <Tabs.Tab px="xl" value="setting" icon={<IconSettings size={20} />}>
-              設定
-            </Tabs.Tab>
-          </Tabs.List>
-        </Tabs>
-        <div className=" px-40 pt-10">{children}</div>
+        <div className=" px-40 pt-4">{children}</div>
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useMoneyDiary } from "../../../../hooks/useMoneyDiary";
 import { store } from "../../../../libs/store";
-import { AggregateTable } from "../../table/AggregateTable";
+import { IncomeAndExpenditurePanel } from "../IncomeAndEexpenditurePanel";
 import { WithTitlePanel } from "../WithTitlePanel";
 
 export const TablePanel: FC = () => {
@@ -11,26 +11,22 @@ export const TablePanel: FC = () => {
   if (!aggregates)
     return (
       <WithTitlePanel title="収支">
-        <AggregateTable
-          rows={[
-            { title: "収入", price: 0 },
-            { title: "総支出", price: 0 },
-            { title: "収支", price: 0 },
-          ]}
-        />
+        <IncomeAndExpenditurePanel incomeAndExpenditure={{ withdrawal: 0, payment: 0, incomeAndExpenditure: 0 }} />
       </WithTitlePanel>
     );
 
   const result = aggregates.aggregateByYear.find((aggregate) => aggregate.date === year);
+  const title = `${year}年収支`;
 
-  const data = [
-    { title: "総収入", price: result ? result.withdrawal : 0 },
-    { title: "総支出", price: result ? result.payment : 0 },
-    { title: "収支", price: result ? result.incomeAndExpenditure : 0 },
-  ];
   return (
-    <WithTitlePanel title="年間収支">
-      <AggregateTable rows={data} />
+    <WithTitlePanel title={title}>
+      <IncomeAndExpenditurePanel
+        incomeAndExpenditure={{
+          withdrawal: result ? result.withdrawal : 0,
+          payment: result ? result.payment : 0,
+          incomeAndExpenditure: result ? result.incomeAndExpenditure : 0,
+        }}
+      />
     </WithTitlePanel>
   );
 };
