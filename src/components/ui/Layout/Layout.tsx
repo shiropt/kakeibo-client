@@ -89,7 +89,7 @@ export const Layout: FC<Props> = ({ children, title = "Next.js" }) => {
             <Tabs.Tab px="xl" value="assets" icon={<IconBusinessplan size={20} />}>
               資産
             </Tabs.Tab>
-            <Tabs.Tab px="xl" value="setting" icon={<IconSettings size={20} />}>
+            <Tabs.Tab px="xl" value="settings" icon={<IconSettings size={20} />}>
               設定
             </Tabs.Tab>
           </Tabs.List>
