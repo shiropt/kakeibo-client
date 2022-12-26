@@ -16,7 +16,7 @@ export const TablePanel: FC = () => {
     );
 
   const result = aggregates.aggregateByYear.find((aggregate) => aggregate.date === year);
-  const title = `${year}年収支`;
+  const title = `${year} 年収支`;
 
   return (
     <WithTitlePanel title={title}>
