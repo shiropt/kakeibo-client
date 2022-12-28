@@ -12,7 +12,7 @@ export const TablePanel: FC = () => {
 
   if (!moneyDiaries)
     return (
-      <WithTitlePanel title={title}>
+      <WithTitlePanel title={""}>
         <IncomeAndExpenditurePanel incomeAndExpenditure={{ withdrawal: 0, payment: 0, incomeAndExpenditure: 0 }} />
       </WithTitlePanel>
     );
