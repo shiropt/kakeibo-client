@@ -34,7 +34,6 @@ export const DetailRow: FC<Props> = ({ aggregate: { date, withdrawal, payment, i
           <span className={minusColor(incomeAndExpenditure)}>{incomeAndExpenditure.toLocaleString()}円</span>
         </p>
       </td>
-      <td className=" w-96 text-center">-</td>
     </tr>
   );
 };

@@ -6,6 +6,7 @@ import { WithTitlePanel } from "../../ui/panel/WithTitlePanel";
 import { ChartPanel } from "../../ui/panel/year/ChartPanel";
 import { TablePanel } from "../../ui/panel/year/TablePanel";
 import { MonthList } from "../../ui/list/month/MonthList";
+import { Box } from "@mantine/core";
 
 export const Year: FC = () => {
   return (
@@ -15,20 +16,22 @@ export const Year: FC = () => {
           <SelectYearAndMonth isShowMonth={false} />
         </div>
         <div className="flex">
-          <div>
+          <Box>
             <TablePanel />
-            <ChartPanel />
-          </div>
+            <Box mt={40}>
+              <ChartPanel />
+            </Box>
+          </Box>
           <div className=" w-full">
-            <WithTitlePanel title="入力">
-              <MoneyDiaryForm />
+            <WithTitlePanel title="年間収支一覧">
+              <MonthList />
             </WithTitlePanel>
           </div>
         </div>
-        <WithTitlePanel title="年間収支一覧">
+        {/* <WithTitlePanel title="年間収支一覧">
           <div className="flex justify-end"></div>
           <MonthList />
-        </WithTitlePanel>
+        </WithTitlePanel> */}
       </div>
     </Layout>
   );
