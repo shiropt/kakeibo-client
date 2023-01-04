@@ -13,7 +13,7 @@ export const MonthList: FC = () => {
   if (!aggregates) return <FallbackList isLoading={false} />;
   const result = aggregates.aggregateByMonth.filter((aggregate) => aggregate.date.slice(0, 4) === year);
   return (
-    <Table h={550} highlightOnHover striped withColumnBorders className=" bg-white">
+    <Table highlightOnHover striped withColumnBorders className=" bg-white">
       <thead>
         <tr>
           <th></th>

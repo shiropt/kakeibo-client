@@ -22,11 +22,11 @@ export const Year: FC = () => {
               <ChartPanel />
             </Box>
           </Box>
-          <div className=" w-full">
-            <WithTitlePanel title="年間収支一覧">
+          <WithTitlePanel title="年間収支一覧">
+            <Box w={850} h={540}>
               <MonthList />
-            </WithTitlePanel>
-          </div>
+            </Box>
+          </WithTitlePanel>
         </div>
         {/* <WithTitlePanel title="年間収支一覧">
           <div className="flex justify-end"></div>
