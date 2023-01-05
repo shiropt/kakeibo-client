@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { MoneyDiaryForm } from "../../ui/form/MoneyDiary/MoneyDiaryForm";
 import { Layout } from "../../ui/Layout";
 import { SelectYearAndMonth } from "../../ui/select/SelectTwoPieces";
 import { WithTitlePanel } from "../../ui/panel/WithTitlePanel";
@@ -28,10 +27,6 @@ export const Year: FC = () => {
             </Box>
           </WithTitlePanel>
         </div>
-        {/* <WithTitlePanel title="年間収支一覧">
-          <div className="flex justify-end"></div>
-          <MonthList />
-        </WithTitlePanel> */}
       </div>
     </Layout>
   );
